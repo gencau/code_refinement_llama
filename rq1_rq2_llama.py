@@ -223,7 +223,7 @@ def rq1():
         end_index = min(start_index + batch_size, len(datas))
         current_batch = datas[start_index:end_index]
         
-        for prompt_id in range(4):
+        for prompt_id in range(5):
             for version_id in range(5):
                 for temperature in [0, 0.5, 1]:
                     modelfile = "codellama-temp" + str(temperature)
