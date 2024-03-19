@@ -4,6 +4,7 @@ import re
 import os
 import csv
 import subprocess
+import time
 from time import sleep
 
 from evaluation import myeval
@@ -86,7 +87,7 @@ def generate_new_prompt5(old_without_minus, review):
     return prompt
 
 def get_model_response(prompt, modelfile):
-    command = ["ollama", "run", modelfile, prompt]
+    command = ["ollama", "run", modelfile, prompt, "/set parameter num_ctx 4096"]
     answer = subprocess.run(command, capture_output=True, text=True)
 
     newcode = ""
@@ -108,6 +109,7 @@ def get_model_response(prompt, modelfile):
 def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
     new_id = 0
     for data in datas:
+        _id = data['_id']
         old = data['old']
         new = data['new']
         review = data['review']
@@ -161,7 +163,7 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
         file_exists = os.path.isfile(csv_file_path)
         
         with open(csv_file_path, 'a', newline='') as csvfile:
-            fieldnames = ['_id', f'prompt_id', f'version_id', f'temperature', f'new_prompt', f'new_code', f'new_answer',
+            fieldnames = ['id', f'record_id', f'prompt_id', f'version_id', f'temperature', f'new_prompt', f'new_code', f'new_answer',
                           f'new_em', f'new_em_trim', f'new_bleu', 
                           f'new_bleu_trim', 'old', 'new', 'review']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -170,7 +172,8 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
                 writer.writeheader()
             
             writer.writerow({
-                '_id': new_id, 
+                'id': new_id, 
+                f'record_id':_id,
                 f'prompt_id':prompt_id,
                 f'version_id':version_id,
                 f'temperature':temperature,
@@ -186,8 +189,22 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
             
         print("Data saved to CSV file.")
         
+        time.sleep(2)
+        
         new_id += 1  # Increment ID for the next entry
+        
+def extract_first_100(read_path):
+    datas = []
+    with open(read_path, 'r', encoding='utf-8') as f:
+        for _ in range(100):  # Only read the first 100 lines
+            try:
+                line = next(f)  # Get next line from file
+                data = json.loads(line)  # Convert JSON line to dictionary
+                datas.append(data)
+            except StopIteration:  # If there are fewer than 100 lines, stop reading
+                break
 
+    return datas
 
 def rq1():
     """
@@ -195,22 +212,22 @@ def rq1():
     During actual execution, multiprocessing will be used to accelerate the process.
     """
     read_path = "sampled_codereview_250.jsonl"
-    with open(read_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-
-    datas = [json.loads(line) for line in lines]
-    batch_size = 100
-    pause_duration = 60
+    
+    # TODO: extract your own piece of data instead
+    datas = extract_first_100(read_path)
+    
+    batch_size = 25
+    pause_duration = 30
     
     for start_index in range(0, len(datas), batch_size):
         end_index = min(start_index + batch_size, len(datas))
         current_batch = datas[start_index:end_index]
         
-        for prompt_id in range(5):
+        for prompt_id in range(4):
             for version_id in range(5):
                 for temperature in [0, 0.5, 1]:
                     modelfile = "codellama-temp" + str(temperature)
-                    print("Callign with: " + modelfile)
+                    print("Calling with: " + modelfile)
                     rq1_work(prompt_id, version_id, modelfile, temperature, current_batch)
                     
         if (end_index < len(datas)):
