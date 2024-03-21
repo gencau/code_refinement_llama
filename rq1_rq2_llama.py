@@ -4,6 +4,7 @@ import re
 import os
 import csv
 import subprocess
+import requests
 import time
 from time import sleep
 
@@ -87,6 +88,7 @@ def generate_new_prompt5(old_without_minus, review):
     return prompt
 
 def get_model_response(prompt, modelfile):
+    
     command = ["ollama", "run", modelfile, prompt, "/set parameter num_ctx 4096"]
     answer = subprocess.run(command, capture_output=True, text=True)
 
@@ -103,7 +105,8 @@ def get_model_response(prompt, modelfile):
             newcode = "no code"
             print("no code:")
             print(answer)
-    return newcode,answer.stdout
+    
+    return newcode, answer
 
 
 def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
@@ -216,14 +219,14 @@ def rq1():
     # TODO: extract your own piece of data instead
     datas = extract_first_100(read_path)
     
-    batch_size = 25
+    batch_size = 100
     pause_duration = 30
     
     for start_index in range(0, len(datas), batch_size):
         end_index = min(start_index + batch_size, len(datas))
         current_batch = datas[start_index:end_index]
         
-        for prompt_id in range(4):
+        for prompt_id in range(5):
             for version_id in range(5):
                 for temperature in [0, 0.5, 1]:
                     modelfile = "codellama-temp" + str(temperature)
@@ -284,7 +287,7 @@ def rq2():
         # save to db
 
 def split_and_save():
-    read_path = "codereview_new.jsonl"
+    read_path = "codereview.jsonl"
     train_sample_path = "sampled_codereview_train.jsonl"
     validation_sample_path = "sampled_codereview_validation.jsonl"
     test_sample_path = "sampled_codereview_test.jsonl"
@@ -294,7 +297,7 @@ def split_and_save():
         lines = f.readlines()
     
     # Set the random seed for reproducibility
-    random.seed(2024)
+    random.seed(2023)
     
     # Shuffle the indices to randomly distribute data into splits
     indices = list(range(len(lines)))
@@ -334,7 +337,7 @@ def sample_test():
         lines = f.readlines()
     
     # Randomly select 500 unique indices from the total lines available
-    random.seed(2024)
+    random.seed(2023)
     # Randomly select 500 unique indices for the first sample
     first_ids = random.sample(range(len(lines)), 250)
     
@@ -363,7 +366,7 @@ def sample_train_val():
     combined_data = train_data + validation_data
     
     # Set the random seed for reproducibility
-    random.seed(2024)
+    random.seed(2023)
     
     # Randomly select 500 unique items from the combined dataset
     sampled_data = random.sample(combined_data, 500)
