@@ -277,9 +277,9 @@ def rq1():
     read_path = "sampled_trainval_500.jsonl"
     
     # TODO: extract your own piece of data instead
-    datas = extract_records(read_path, 0, 125)
+    datas = extract_records(read_path, 0, 250)
     
-    batch_size = 125
+    batch_size = 250
     pause_duration = 5
     
     for start_index in range(0, len(datas), batch_size):
