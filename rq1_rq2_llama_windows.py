@@ -321,7 +321,7 @@ def rq2():
         old_without_minus = []
 
         for line in old.split("\n"):
-        old_without_minus.append(line[1:])
+            old_without_minus.append(line[1:])
         old_without_minus = "\n".join(old_without_minus)
         prompt = generate_new_prompt5(old_without_minus, review)
         gpt_code = "no code"
@@ -375,7 +375,7 @@ def rq2():
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if not file_exists:  # Only write headers if file does not exist
-            writer.writeheader()   
+                writer.writeheader()   
             writer.writerow({
                 'id': new_id, 
                 f'record_id':_id,
@@ -390,7 +390,7 @@ def rq2():
                 f'new_bleu': gpt_bleu,
                 f'new_bleu_trim': gpt_bleu_trim,
                 'old': old, 'new': new, 'review': review
-            })
+        })
         print("Data saved to CSV file.")
         time.sleep(2)
         new_id += 1  # Increment ID for the next entry
@@ -492,8 +492,8 @@ def main():
     #sample_train_val()
     #sample_test()
     #get_model_response("[INST] Can you write an efficient fibonacci function that works in linear time complexity?[/INST]", "codellama-temp0")
-    rq1()
-    #rq2()
+    #rq1()
+    rq2()
     #call_rq1_work_with_file_data("missing-keys2-llama2.csv", "sampled_codereview_250.jsonl")
 
 if __name__ == '__main__':
