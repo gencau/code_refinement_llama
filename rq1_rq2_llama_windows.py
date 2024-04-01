@@ -299,28 +299,41 @@ def rq1():
 
 
 def rq2():
+
     # The steps for codereview.jsonl and codereview_new.jsonl are essentially the same,
+
     # with the only difference being the method of storing data in the database.
+
     # read_path = "codereview.jsonl"
-    read_path = "codereview_new.jsonl"
+
+    read_path = "sampled_codereview-new_test.jsonl"
     with open(read_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
+
+    new_id = 0
+
     for line in lines:
         data = json.loads(line)
+        _id = data['_id']
         old = data['old']
         new = data['new']
         review = data['review']
         old_without_minus = []
+
         for line in old.split("\n"):
-            old_without_minus.append(line[1:])
+        old_without_minus.append(line[1:])
         old_without_minus = "\n".join(old_without_minus)
-        prompt = generate_new_prompt2(old_without_minus, review)
+        prompt = generate_new_prompt5(old_without_minus, review)
         gpt_code = "no code"
         gpt_answer = "no answer"
-        for i in range(100):
+        modelfile = "codellama-temp0"
+
+        print("Current id: " + str(data['_id']))
+
+        for i in range(2):
             # try 3 times to get a valid response
             try:
-                gpt_code, gpt_answer = get_chatgptapi_response(prompt, temperature=0)
+                gpt_code, gpt_answer = get_model_response(prompt, modelfile)
             except:
                 print("error, id:{} try the {}th time".format(id, i))
                 sleep(60)
@@ -336,15 +349,51 @@ def rq2():
                         sleep(10)
                 continue
             break
+
         # calc the em and bleu
+
         new_code = []
+
         for line in new.split("\n"):
             if line.strip() != "":
                 new_code.append(line[1:].strip())
+
         new_code = "\n".join(new_code)
         gpt_em, gpt_em_trim, _, _, gpt_bleu, gpt_bleu_trim \
             = myeval(new_code, gpt_code)
-        # save to db
+
+        # The CSV file path
+        csv_file_path = 'output_rq2.csv'
+
+        # Check if the file exists to determine if we need to write headers
+        file_exists = os.path.isfile(csv_file_path)        
+
+        with open(csv_file_path, 'a', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['id', f'record_id', f'prompt_id', f'version_id', f'temperature', f'prompt', f'new_code', f'new_answer',
+                          f'new_em', f'new_em_trim', f'new_bleu', 
+                          f'new_bleu_trim', 'old', 'new', 'review']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            if not file_exists:  # Only write headers if file does not exist
+            writer.writeheader()   
+            writer.writerow({
+                'id': new_id, 
+                f'record_id':_id,
+                f'prompt_id':5,
+                f'version_id':i,
+                f'temperature':0,
+                f'prompt': prompt,
+                f'new_code': gpt_code,
+                f'new_answer': gpt_answer,
+                f'new_em': gpt_em,
+                f'new_em_trim': gpt_em_trim,
+                f'new_bleu': gpt_bleu,
+                f'new_bleu_trim': gpt_bleu_trim,
+                'old': old, 'new': new, 'review': review
+            })
+        print("Data saved to CSV file.")
+        time.sleep(2)
+        new_id += 1  # Increment ID for the next entry
 
 def split_and_save():
     read_path = "codereview.jsonl"
