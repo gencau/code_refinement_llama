@@ -395,6 +395,117 @@ def rq2():
         time.sleep(2)
         new_id += 1  # Increment ID for the next entry
 
+def fillMissingRecords():
+
+    read_path = "sampled_codereview-new_test.jsonl"
+    with open(read_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        
+    new_id = 0
+    missing_ids = [12722,12470,2208,13942,12203,12433,12830]
+
+    for line in lines:
+        data = json.loads(line)
+        _id = data['_id']
+        
+        if (_id not in missing_ids):
+            continue
+            
+        old = data['old']
+        new = data['new']
+        review = data['review']
+        old_without_minus = []
+
+        for line in old.split("\n"):
+            old_without_minus.append(line[1:])
+        old_without_minus = "\n".join(old_without_minus)
+        prompt = generate_new_prompt5(old_without_minus, review)
+        gpt_code = "no code"
+        gpt_answer = "no answer"
+        modelfile = "codellama-temp0"
+
+        print("Current id: " + str(data['_id']))
+
+        # Skip the results and eval, we'll do it manually
+        
+        
+        # The CSV file path
+        csv_file_path = 'output_rq2.csv'
+
+        # Check if the file exists to determine if we need to write headers
+        file_exists = os.path.isfile(csv_file_path)        
+
+        with open(csv_file_path, 'a', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['id', f'record_id', f'prompt_id', f'version_id', f'temperature', f'prompt', f'new_code', f'new_answer',
+                          f'new_em', f'new_em_trim', f'new_bleu', 
+                          f'new_bleu_trim', 'old', 'new', 'review']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            if not file_exists:  # Only write headers if file does not exist
+                writer.writeheader()   
+            writer.writerow({
+                'id': new_id, 
+                f'record_id':_id,
+                f'prompt_id':5,
+                f'version_id':0,
+                f'temperature':0,
+                f'prompt': prompt,
+                f'new_code': '',
+                f'new_answer': '',
+                f'new_em': '',
+                f'new_em_trim': '',
+                f'new_bleu': '',
+                f'new_bleu_trim': '',
+                'old': old, 'new': new, 'review': review
+        })
+        print("Data saved to CSV file.")
+        time.sleep(2)
+        new_id += 1  # Increment ID for the next entry
+
+def calculateScoresOnManualRun():
+    read_path = "manual_run_rq2.csv"
+    output_path = "updated_manual_run_rq2.csv"  # Output file path
+    
+    # Initialize a list to hold updated rows
+    updated_rows = []
+
+    # Read the original CSV data
+    with open(read_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        lines = list(reader)  # Convert iterator to list to reuse
+        
+        # Define fieldnames for the output CSV based on the input plus new fields
+        fieldnames = reader.fieldnames + ['new_em', 'new_em_trim', 'new_bleu', 'new_bleu_trim']
+
+        for row in lines:
+            # Assuming row is already a dictionary
+            result = row['new']
+            gpt_code = row['new_code']
+
+            # Your existing logic to calculate the scores
+            # Assuming myeval returns scores that you want to add to row
+            new_code = "\n".join([line[1:].strip() for line in result.split("\n") if line.strip() != ""])
+            gpt_em, gpt_em_trim, _, _, gpt_bleu, gpt_bleu_trim = myeval(new_code, gpt_code)
+            
+            # Update row with new scores
+            row.update({
+                'new_em': gpt_em,
+                'new_em_trim': gpt_em_trim,
+                'new_bleu': gpt_bleu,
+                'new_bleu_trim': gpt_bleu_trim,
+            })
+            updated_rows.append(row)
+
+    # Write updated data to a new CSV file
+    with open(output_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(updated_rows)
+
+    print(f"Updated scores have been written to {output_path}")
+            
+        
+
 def split_and_save():
     read_path = "codereview.jsonl"
     train_sample_path = "sampled_codereview_train.jsonl"
@@ -493,8 +604,10 @@ def main():
     #sample_test()
     #get_model_response("[INST] Can you write an efficient fibonacci function that works in linear time complexity?[/INST]", "codellama-temp0")
     #rq1()
-    rq2()
+    #rq2()
     #call_rq1_work_with_file_data("missing-keys2-llama2.csv", "sampled_codereview_250.jsonl")
+    #fillMissingRecords()
+    calculateScoresOnManualRun()
 
 if __name__ == '__main__':
     main()
