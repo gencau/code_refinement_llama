@@ -1,5 +1,5 @@
-id,new_em_trim,gpt_em_trim,new_code,gpt_code,prompt
-841,1,0,"
+id,new_em_trim,new_bleu_trim,gpt_em_trim,gpt_bleu_trim,new_code,gpt_code,prompt
+841,1,100.0,0,53.751694390028305,"
 class StylableButton: UIButton, Stylable {
     setBackgroundImageColor(style.normalStateColors.background, for: .normal)
     setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
@@ -49,7 +49,7 @@ There is the code review for this code:
 Swift lint issue
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1080,1,0,"
+1080,1,100.0,0,86.9799012241772,"
 final class BackupStatusCell: UITableViewCell {
     backgroundColor = .clear
     contentView.backgroundColor = .clear
@@ -84,7 +84,7 @@ There is the code review for this code:
 Here I think you're setting the tintColor for the cell not the iconView. Please update it.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-174,1,0,"
+174,1,100.0,0,91.0504159765471,"
 class StorageMetadataTests: XCTestCase {
     ]
     let metadata0 = StorageMetadata(dictionary: metaDict)
@@ -122,7 +122,7 @@ Is this assertion a worthy addition when testing copy'ing?
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-445,1,0,"
+445,1,100.0,0,70.71271450222503,"
 + (NSString *)longHostname {
 + (NSString *)modelIdentifier {
   struct utsname systemInfo;
@@ -159,7 +159,7 @@ return @(systemInfo.machine)
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-784,1,0,"
+784,1,100.0,0,33.623660328728214,"
 class JavalinJackson(private var objectMapper: ObjectMapper? = null) : JsonMappe
                 .registerOptionalModule(OptionalDependency.JACKSON_KT.testClass)
                 .registerOptionalModule(OptionalDependency.JACKSON_JSR_310.testClass)
@@ -192,7 +192,7 @@ There is the code review for this code:
 Indentation should be the same here as above
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-337,1,0,"
+337,1,100.0,0,91.74264791498925,"
 const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['kotlin', 'groovy', 'java'],
@@ -263,7 +263,7 @@ nit: Shouldn't this heve 2 less indentation spaces?
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-384,1,0,"
+384,1,100.0,0,89.90829059682393,"
 import kotlinx.serialization.ExperimentalSerializationApi
 @ExperimentalSerializationApi
 public interface ChunkedDecoder {
@@ -309,7 +309,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-2,1,0,"
+2,1,96.49159444,0,39.48986113394698,"
 class MapDataCache(
     }
 
@@ -349,7 +349,7 @@ The format had me confused for a bit
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-999,1,0,"
+999,1,100.0,0,82.80520657087858,"
 package de.westnordost.streetcomplete.quests.seating
 
 enum class Seating(val hasOutdoorSeating: Boolean, val hasIndoorSeating: Boolean) {
@@ -390,7 +390,7 @@ enum class Seating(val hasOutdoorSeating: Boolean, val hasIndoorSeating: Boolean
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1052,1,0,"
+1052,1,100.0,0,98.06385751178479,"
 modify_in <- function(.x, .where, .f, ...) {
     assign_in <- function(x, where, value) {
         n <- length(where)
@@ -425,7 +425,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-658,1,0,"
+658,1,100.0,0,78.8063673039116,"
 multi_predict._elnet <-
                            opts = dots, penalty = penalty, multi = TRUE)
 
@@ -474,7 +474,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-242,1,0,"
+242,1,100.0,0,73.90973893525951,"
 const SeriesResults = ({
   pager,
   query,
@@ -518,7 +518,7 @@ There is the code review for this code:
 One line? :) 
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1045,1,0,"
+1045,1,100.0,0,81.00552360570697,"
 class Release extends mbEntity.Release {
     this.packagingID = ko.observable(data.packagingID);
     this.barcode = new Barcode(data.barcode);
@@ -555,7 +555,7 @@ There is the code review for this code:
 Could be shortened a bit since this will always be a string, null or undefined. Thanks for finding and fixing this, by the way. (I should really try to set up my own local development server soon, just need to find a partition with enough free space and a bit of time...)
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-363,1,0,"
+363,1,100.0,0,95.66869019744225,"
 final class EmberServerBuilder[F[_]: Async: Network] private (
     * This handler allows for configuring the behavior. The default as of
     * 0.23.19 is to return a 400.
@@ -593,7 +593,7 @@ There is the code review for this code:
 Fixes the scaladoc formatting
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-703,1,0,"
+703,1,100.0,0,45.935774708039126,"
 object `Content-Disposition` {
   def parse(s: String): ParseResult[`Content-Disposition`] =
     ParseResult.fromParser(parser, ""Invalid Content-Disposition header"")(s)
@@ -621,7 +621,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-348,1,0,"
+348,1,100.0,0,96.24727879430155,"
 func configureSigstoreClient(client sigstore.Sigstore, c *SigstoreHCLConfig, log
 	for _, subject := range c.AllowedSubjects {
 		client.AddAllowedSubject(subject)
@@ -654,7 +654,7 @@ There is the code review for this code:
 This should be https://rekor.sigstore.dev/
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-921,1,0,"
+921,1,100.0,0,80.43684070174123,"
 public function getFromDb()
 					unset($field['index'], $field['origtype']);
 
@@ -689,7 +689,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-95,1,0,"
+95,1,99.03141398,0,83.62858446055952,"
 func (s *RequestDrivenWebService) ContainerPlatform() string {
 	return platformString(s.InstanceConfig.Platform.OS(), s.InstanceConfig.Platform.Arch())
 }
@@ -724,7 +724,7 @@ There is the code review for this code:
 can we also update the comments to not say ""ws root"" anymore 🥺 
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-25,1,0,"
+25,1,94.66796512,0,91.31665739039472,"
 # tag: openmp
 
 from cython.parallel import parallel
@@ -765,7 +765,7 @@ There is the code review for this code:
 Presumably this needs to be part of ` from cython.cimports.openmp import omp_set_dynamic`
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-298,1,0,"
+298,1,100.0,0,6.02336682634164,"
 For proxying:
 			cmd.Flags().BoolP(""insecure"", """", false, ""Disable TLS verification (WARNING: DISABLES SECURITY BY NOT VERIFYING TLS CERTIFICATES!)"")
 			cmd.Flags().BoolP(""disable-redirects"", ""r"", false, ""Disable HTTP->HTTPS redirects"")
@@ -796,7 +796,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-404,1,0,"
+404,1,100.0,0,95.94259086143686,"
 namespace Microsoft.Health.Fhir.Core.Features.Security.Authorization
     /// </summary>
     public static class SMARTScopeFhirAuthorizationService
@@ -834,7 +834,7 @@ Public static here means it would be a good candidate for an extension method
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-227,1,0,"
+227,1,100.0,0,97.03761089332164,"
 def test_undirected_graphs_are_not_supported():
     """"""
     Test that undirected graphs are not supported.
@@ -869,7 +869,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1087,1,0,"
+1087,1,100.0,0,100.0,"
 DataWriterImpl::DataWriterImpl(
     , qos_(&qos == &DATAWRITER_QOS_DEFAULT ? publisher_->get_default_datawriter_qos() : qos)
     , listener_(listen)
@@ -913,7 +913,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-328,1,0,"
+328,1,100.0,0,95.06006248873446,"
 def on_before_stop(self):
     pass
 
@@ -949,7 +949,7 @@ tiny typo nit:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-863,1,0,"
+863,1,96.15432951,0,93.36845688287198,"
 def call
       end
 
@@ -984,7 +984,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-59,1,0,"
+59,1,100.0,0,91.02125539703947,"
 require 'test_helper'
 
 class ExternalEntryTest < ActiveSupport::TestCase
@@ -1018,7 +1018,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-789,1,0,"
+789,1,100.0,0,69.42573322186043,"
 class PythonDistributionEntryPointsField(NestedDictStringToStringField, AsyncFie
 class PythonDistributionOutputPathField(StringField, AsyncFieldMixin):
     help = softwrap(
@@ -1063,7 +1063,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-244,1,0,"
+244,1,100.0,0,79.800635935442,"
 func (txs *transactions) processInNormalMode(
 	txs.txExecutionOrderHandler.Add(txHash)
 	_, err := txs.txProcessor.ProcessTransaction(tx)
@@ -1102,7 +1102,7 @@ There is the code review for this code:
 I would move this line in the method below -> handleProcessTransactionError. There are managed all the reverting stuff!
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1097,1,0,"
+1097,1,100.0,0,100.0,"
 def build_mypy(target_dir: str) -> None:
     env = os.environ.copy()
     env[""CC""] = ""clang""
@@ -1137,7 +1137,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1007,1,0,"
+1007,1,100.0,0,72.79784911055258,"
 FINISHED = _(""Installation finished"")
 PENDING = _(""Update available"")
 CHECKING = _(""Checking for updates"")
@@ -1198,7 +1198,7 @@ INSTALL_INFO_MESSAGES = {
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-769,1,0,"
+769,1,100.0,0,96.86022815635118,"
 func TestMultiCollectionChannelAccess(t *testing.T) {
 	resp = rt.SendUserRequestWithHeaders(http.MethodGet, ""/{{.keyspace3}}/testDocBazB"", """", nil, ""userAB"", ""letmein"")
 	RequireStatus(t, resp, http.StatusOK)
@@ -1233,7 +1233,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-590,1,0,"
+590,1,100.0,0,98.59264605171035,"
 def cluster_command_schema_to_vol_schema(schema: CommandSchema) -> vol.Schema:
     def schema_type_to_vol(field_type: Any) -> Any:
         """"""Convert a schema type to a voluptuous type.""""""
@@ -1281,7 +1281,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-201,1,0,"
+201,1,100.0,0,86.5129154728976,"
 type Config struct {
 	// AgentTTL is time-to-live for agent SVIDs
 	AgentTTL time.Duration
@@ -1372,7 +1372,7 @@ There is the code review for this code:
 Shouldn't these be passed to the CA config in pkg/server/server.go?
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-729,1,0,"
+729,1,100.0,0,97.15971623015652,"
 TEST(No dense indexes serialization when create dense index in config is false)
     last_written_chunks;
   auto filesystem = sys.spawn(dummy_filesystem, std::ref(last_written_chunks));
@@ -1407,7 +1407,7 @@ Wouldn't it already suffice to use the default store with the memory filesystem 
 Regardless, do you still want to fix this within this PR? Otherwise `s/FIXME/TODO`.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-1105,1,0,"
+1105,1,100.0,0,90.7914772775276,"
 namespace vast {
 
 namespace {
@@ -1435,7 +1435,7 @@ There is the code review for this code:
 Please use snake_case in the code base for consistency.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-409,1,0,"
+409,1,100.0,0,95.346470173019,"
 func (mre *MatchRegexp) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 	// then there's more than one path_regexp matcher
 	// and we would end up overwriting the old one
@@ -1472,7 +1472,7 @@ There is the code review for this code:
 This is used for more than just the path matcher IIRC
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-718,1,0,"
+718,1,100.0,0,1.4874267931017903e-79,"
 func New(
 	transactionService transaction.Service,
 	postageService postage.Service,
@@ -1509,7 +1509,7 @@ There is the code review for this code:
 Please remember to do a self-review once you post your diff. All these changes not pertaining to your changeset need to be reverted once you are done.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-358,1,0,"
+358,1,100.0,0,84.37913032449457,"
 class Connect
       def self.call(vault)
         faraday_connection = Faraday.new(
@@ -1542,7 +1542,7 @@ There is the code review for this code:
 `headers: { 'X-Vault-Token': vault[:token] }`
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-452,1,0,"
+452,1,100.0,0,96.69409201833395,"
 type ApplicationCallTxnFields struct {
 
 	// Boxes are the boxes that can be accessed by this transaction (and others
@@ -1580,7 +1580,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-593,1,0,"
+593,1,100.0,0,9.703216697373216,"
 void PDPSimple::announceParticipantState(
     {
         auto endpoints = static_cast<fastdds::rtps::SimplePDPEndpoints*>(builtin_endpoints_.get());
@@ -1611,7 +1611,7 @@ There is the code review for this code:
 NIT: Just for uniformity sake 
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-438,1,0,"
+438,1,98.22182944,0,95.42217765571345,"
 type QualityInfo struct {
     // EarningsPerService represents information about earnings per service
     type EarningsPerService struct {
@@ -1645,7 +1645,7 @@ There is the code review for this code:
 vpn -> data_transfer
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-979,1,0,"
+979,1,100.0,0,1.6657008787629752e-97,"
 public String getConfigurationAsJsonString() {
 
 	Map<String, String> propsAsStringMap = new HashMap<>();
@@ -1700,7 +1700,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-80,1,0,"
+80,1,100.0,0,94.5179185425931,"
 public class CopyHardAndSymbolicLink_Tests
         [Fact]
         public void CopyWithHardAndSymbolicLinks()
@@ -1732,7 +1732,7 @@ There is the code review for this code:
 nit: extra space
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-412,1,0,"
+412,1,100.0,0,69.60870221465801,"
 def call_exception_handler(self, context):
 
     def _add_callback(self, handle):
@@ -1763,7 +1763,7 @@ There is the code review for this code:
 I wonder if we should drop this assertion as well? It's still going to be the slowest part of the method.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-398,1,0,"
+398,1,100.0,0,96.64977291692999,"
 def async_create_entity(event: ItemEvent, obj_id: str) -> None:
 
     @callback
@@ -1798,7 +1798,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-318,1,0,"
+318,1,100.0,0,87.35652159055172,"
 def icon(self):
     return ""mdi:restart-alert""
 return ""mdi:phone""
@@ -1832,7 +1832,7 @@ Why return a bool?
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-160,1,0,"
+160,1,100.0,0,91.68860197427531,"
 def test_infeasible_prob_16609():
     _msg_iter = ""Iteration limit reached. (HiGHS Status 14:""
 
@@ -1877,7 +1877,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-536,1,0,"
+536,1,97.37673307,0,73.65756869301094,"
 class VectorSettingsLabsFragment :
     private fun configureEnableClientInfoRecordingPreference() {
         findPreference<VectorSwitchPreference>(VectorPreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
@@ -1924,7 +1924,7 @@ There is the code review for this code:
 Maybe change to `when (newValue as? Boolean)`
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-754,1,0,"
+754,1,77.25453889,0,0.782837754922577,"
 class SelfManga : GroupLe(""SelfManga"", ""https://selfmanga.live"", ""ru"") {
     override val id: Long = 5227602742162454547
 
@@ -1964,7 +1964,7 @@ There is the code review for this code:
 This is causing lint error.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-509,1,0,"
+509,1,100.0,0,34.23935480243099,"
 class MangaSee : NepNep(""MangaSee"", ""https://mangasee123.com"", ""en"") {
         .writeTimeout(1, TimeUnit.MINUTES)
         .build()
@@ -2013,7 +2013,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-588,1,0,"
+588,1,100.0,0,95.29032509424108,"
 import coil.compose.rememberAsyncImagePainter
 fun PodcastImage(
     uuid: String,
@@ -2063,7 +2063,7 @@ There is the code review for this code:
 No strong feelings, I just thought it might be useful to make it a bit more obvious why the `title` matters even if `showTitle` is false.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-707,1,0,"
+707,1,100.0,0,94.32691605012545,"
 class KafkaMigrateZkCommand extends KafkaDataStoreCommand {
             noZk.createSchema(withZk.getSchema(typeName))
           }
@@ -2097,7 +2097,7 @@ There is the code review for this code:
 ```
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-356,1,0,"
+356,1,99.17521887,0,93.52224607610779,"
 class CallGraphGenerator {
   def generate(cpg: Cpg): Graph = {
     val subgraph = mutable.HashMap.empty[String, Seq[StoredNode]]
@@ -2167,7 +2167,7 @@ Note that I didn't ask the compiler for feedback on the above yet...
 
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-721,1,0,"
+721,1,98.23265526,0,98.83208918073026,"
 object Announcements {
   case class AddressException(message: String) extends IllegalArgumentException(message)
 
@@ -2228,7 +2228,7 @@ else
 the last statement will always execute, which is weird from the reader's point of view, so whenever we use non-trivial clauses like here it's better to keep the braces.
 Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
 In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
-604,1,0,"
+604,1,100.0,0,98.6398888427579,"
 final class FileGitAlg[F[_]](config: GitCfg)(implicit
   override def checkIgnore(repo: File, file: String): F[Boolean] =
     git_(""check-ignore"", file)(repo)
