@@ -7,7 +7,7 @@ import subprocess
 import requests
 import time
 from time import sleep
-
+import pandas as pd
 from evaluation import myeval
 
 
@@ -90,7 +90,7 @@ def generate_new_prompt5(old_without_minus, review):
 def get_model_response(prompt, modelfile):
     
     command = ["ollama", "run", modelfile, prompt, "/set parameter num_ctx 4096"]
-    answer = subprocess.run(command, capture_output=True, text=True)
+    answer = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
 
     newcode = ""
     if answer.returncode == 0:
@@ -106,7 +106,7 @@ def get_model_response(prompt, modelfile):
             print("no code:")
             print(answer)
     
-    return newcode, answer
+    return newcode, answer.stdout
 
 
 def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
@@ -130,26 +130,10 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
         gpt_code = "no code"
         gpt_answer = "no answer"
         modelfile = modelfile
-        for i in range(3):
-            # try 3 times to get a valid response
-            try:
-                print("Calling llama with " + prompt + " and model: " + modelfile)
-                gpt_code, gpt_answer = get_model_response(prompt, modelfile)
-            except:
-                print("error, id:{} try the {}th time".format(id, i))
-                sleep(60)
-                if i >= 3:
-                    for j in range(360):
-                        print("waiting for manual stop or {}0s".format(360 - j))
-                        with open('manual_stop.json', 'r') as f:
-                            data = json.load(f)
-                            if data["manual_stop"]:
-                                print("manual stop")
-                                # pdf.save()
-                                exit(0)
-                        sleep(10)
-                continue
-            break
+
+        print("Calling llama with " + prompt + " and model: " + modelfile + " for id: " + str(_id))
+        gpt_code, gpt_answer = get_model_response(prompt, modelfile)
+
 
         # calc the em and bleu
         new_code = []
@@ -165,7 +149,7 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
         # Check if the file exists to determine if we need to write headers
         file_exists = os.path.isfile(csv_file_path)
         
-        with open(csv_file_path, 'a', newline='') as csvfile:
+        with open(csv_file_path, 'a', newline='', encoding='utf-8') as csvfile:
             fieldnames = ['id', f'record_id', f'prompt_id', f'version_id', f'temperature', f'new_prompt', f'new_code', f'new_answer',
                           f'new_em', f'new_em_trim', f'new_bleu', 
                           f'new_bleu_trim', 'old', 'new', 'review']
@@ -196,57 +180,123 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
         
         new_id += 1  # Increment ID for the next entry
         
-def extract_first_100(read_path):
+def extract_records(read_path, start_line=0, num_records=100):
     datas = []
     with open(read_path, 'r', encoding='utf-8') as f:
-        for _ in range(100):  # Only read the first 100 lines
+        # Skip to the starting line if start_line > 0
+        for _ in range(start_line):
+            next(f, None)
+        
+        # Read the specified number of lines (num_records) starting from start_line
+        for _ in range(num_records):
             try:
                 line = next(f)  # Get next line from file
                 data = json.loads(line)  # Convert JSON line to dictionary
                 datas.append(data)
-            except StopIteration:  # If there are fewer than 100 lines, stop reading
+            except StopIteration:  # If there are no more lines, stop reading
                 break
 
     return datas
 
-def rq1():
+def fetch_records_from_jsonl(jsonl_path, record_ids):
     """
-    Here, I have only written the logic code.
-    During actual execution, multiprocessing will be used to accelerate the process.
+    Fetch records from a .jsonl file based on a list of record_ids.
     """
-    read_path = "sampled_codereview_250.jsonl"
+    records = []
+    with open(jsonl_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            record = json.loads(line.strip())
+            # Assuming '_id' is the field in the JSONL file that corresponds to 'record_id' in your CSV
+            if record['_id'] in record_ids:
+                records.append(record)
+    return records
+
+def call_rq1_work_with_file_data(csv_path, jsonl_path):
+    """
+    Reads a CSV file with record_id, prompt_id, and temperature,
+    fetches corresponding records from a JSONL file,
+    and calls rq1_work for each record with version_id from 1 to 4.
+    """
+    # Read the CSV file into a DataFrame
+    df = pd.read_csv(csv_path)
     
-    # TODO: extract your own piece of data instead
-    datas = extract_first_100(read_path)
+    # Correct temperature format by removing '.0' for whole numbers
+    df['temperature'] = df['temperature'].apply(lambda x: str(int(x)) if x in [0.0, 1.0] else str(x))
     
-    batch_size = 100
-    pause_duration = 30
+    # Extract unique record_ids from the DataFrame
+    unique_record_ids = df['record_id'].unique().tolist()
     
-    for start_index in range(0, len(datas), batch_size):
-        end_index = min(start_index + batch_size, len(datas))
-        current_batch = datas[start_index:end_index]
+    # Fetch corresponding records from the JSONL file
+    records = fetch_records_from_jsonl(jsonl_path, unique_record_ids)
+    
+    # Map of record_id to record for faster lookup
+    record_map = {_record['_id']: _record for _record in records}
+    
+    version_ids = [1]
+    
+    for index, row in df.iterrows():
+        record_id = row['record_id']
+        prompt_id = row['prompt_id']
+        temperature = row['temperature']
         
-        for prompt_id in range(5):
-            for version_id in range(5):
-                for temperature in [0, 0.5, 1]:
-                    modelfile = "codellama-temp" + str(temperature)
-                    print("Calling with: " + modelfile)
-                    rq1_work(prompt_id, version_id, modelfile, temperature, current_batch)
-                    
-        if (end_index < len(datas)):
-            print(f"Pausing for {pause_duration}, seconds")
-            time.sleep(pause_duration)
+        # Retrieve the full record from the map
+        current_record = record_map.get(record_id)
+        
+        if current_record:
+            for version_id in version_ids:
+                modelfile = "codellama-temp" + str(temperature)
+                print(f"Calling with: {modelfile}")
+                print(f"Current id: {record_id}")
+                
+                # Call rq1_work with the current record
+                rq1_work(prompt_id, version_id, modelfile, temperature, [current_record])
+        else:
+            print(f"Record ID {record_id} not found in JSONL file.")
+            
+def rq1():
+     """
+     Here, I have only written the logic code.
+     During actual execution, multiprocessing will be used to accelerate the process.
+     """
+     read_path = "sampled_trainval_500.jsonl"
+     
+     # TODO: extract your own piece of data instead
+     datas = extract_records(read_path, start_line=0, num_records=250)
+     
+     batch_size = 250
+     pause_duration = 3
+     
+     start_batch_index = 0
+
+     for start_index in range(start_batch_index, len(datas), batch_size):
+         end_index = min(start_index + batch_size, len(datas))
+         current_batch = datas[start_index:end_index]
+         
+         for prompt_id in range(1,5):
+             for version_id in range(2):
+                 for temperature in [0,0.5,1]:
+                     modelfile = "llama2-" + str(temperature)
+                     print("Calling with: " + modelfile)
+                     print("Current id: " + str(current_batch[0]['_id']))
+                     rq1_work(prompt_id, version_id, modelfile, temperature, current_batch)
+                     
+             if (end_index < len(datas)):
+                 print(f"Pausing for {pause_duration}, seconds")
+                 time.sleep(pause_duration)
 
 
 def rq2():
     # The steps for codereview.jsonl and codereview_new.jsonl are essentially the same,
     # with the only difference being the method of storing data in the database.
     # read_path = "codereview.jsonl"
-    read_path = "codereview_new.jsonl"
+    read_path = "sampled_codereview-new_test.jsonl"
     with open(read_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
+
+    new_id = 0
     for line in lines:
         data = json.loads(line)
+        _id = data['_id']
         old = data['old']
         new = data['new']
         review = data['review']
@@ -254,13 +304,17 @@ def rq2():
         for line in old.split("\n"):
             old_without_minus.append(line[1:])
         old_without_minus = "\n".join(old_without_minus)
-        prompt = generate_new_prompt2(old_without_minus, review)
+        prompt = generate_new_prompt5(old_without_minus, review)
         gpt_code = "no code"
         gpt_answer = "no answer"
-        for i in range(100):
+        modelfile = "codellama-temp0"
+
+        print("Current id: " + str(data['_id']))
+
+        for i in range(2):
             # try 3 times to get a valid response
             try:
-                gpt_code, gpt_answer = get_chatgptapi_response(prompt, temperature=0)
+                gpt_code, gpt_answer = get_model_response(prompt, modelfile)
             except:
                 print("error, id:{} try the {}th time".format(id, i))
                 sleep(60)
@@ -284,7 +338,43 @@ def rq2():
         new_code = "\n".join(new_code)
         gpt_em, gpt_em_trim, _, _, gpt_bleu, gpt_bleu_trim \
             = myeval(new_code, gpt_code)
-        # save to db
+
+        # The CSV file path
+        csv_file_path = 'output_rq2.csv'
+       
+        # Check if the file exists to determine if we need to write headers
+        file_exists = os.path.isfile(csv_file_path)
+        
+        with open(csv_file_path, 'a', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['id', f'record_id', f'prompt_id', f'version_id', f'temperature', f'prompt', f'new_code', f'new_answer',
+                          f'new_em', f'new_em_trim', f'new_bleu', 
+                          f'new_bleu_trim', 'old', 'new', 'review']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            
+            if not file_exists:  # Only write headers if file does not exist
+                writer.writeheader()
+            
+            writer.writerow({
+                'id': new_id, 
+                f'record_id':_id,
+                f'prompt_id':5,
+                f'version_id':i,
+                f'temperature':0,
+                f'prompt': prompt,
+                f'new_code': gpt_code,
+                f'new_answer': gpt_answer,
+                f'new_em': gpt_em,
+                f'new_em_trim': gpt_em_trim,
+                f'new_bleu': gpt_bleu,
+                f'new_bleu_trim': gpt_bleu_trim,
+                'old': old, 'new': new, 'review': review
+            })
+            
+        print("Data saved to CSV file.")
+        
+        time.sleep(2)
+        
+        new_id += 1  # Increment ID for the next entry
 
 def split_and_save():
     read_path = "codereview.jsonl"
@@ -384,8 +474,9 @@ def main():
     #sample_test()
     #sample()
     #get_model_response("[INST] Can you write an efficient fibonacci function that works in linear time complexity?[/INST]", "codellama-temp0")
-    rq1()
-    #rq2()
+    #rq1()
+    #call_rq1_work_with_file_data("missing_records_codellama_100.csv", "sampled_codereview_250.jsonl")
+    rq2()
 
 
 if __name__ == '__main__':

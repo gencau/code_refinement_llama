@@ -1,0 +1,2267 @@
+id,new_em_trim,new_bleu_trim,gpt_em_trim,gpt_bleu_trim,new_code,gpt_code,prompt
+841,1,100.0,0,53.751694390028305,"
+class StylableButton: UIButton, Stylable {
+    setBackgroundImageColor(style.normalStateColors.background, for: .normal)
+    setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+    setBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
+
+    self.layer.borderWidth = 1
+    self.layer.borderColor = isHighlighted ? style.highlightedStateColors.border.cgColor : style.normalStateColors.border.cgColor
+    self.layer.borderColor = isSelected ? style.selectedStateColors?.border.cgColor : style.normalStateColors.border.cgColor
+}
+","
+class StylableButton: UIButton, Stylable {
+    func setButtonBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
+        guard let color = color else { return }
+        setBackgroundImageColor(color, for: state)
+    }
+    
+    func setButtonBorderColor(_ color: UIColor?, for state: UIControl.State) {
+        guard let color = color else { return }
+        self.layer.borderColor = color.cgColor
+    }
+    
+    func setButtonBorderWidth(_ width: CGFloat) {
+        self.layer.borderWidth = width
+    }
+    
+    func updateButtonStyle(_ style: ButtonStyle, isHighlighted: Bool, isSelected: Bool) {
+        setButtonBackgroundImageColor(style.normalStateColors.background, for: .normal)
+        setButtonBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+        setButtonBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
+        
+        setButtonBorderColor(isHighlighted ? style.highlightedStateColors.border : style.normalStateColors.border, for: .highlighted)
+        setButtonBorderColor(isSelected ? style.selectedStateColors?.border : style.normalStateColors.border, for: .selected)
+    }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class StylableButton: UIButton, Stylable {
+        setBackgroundImageColor(style.normalStateColors.background, for: .normal)
+        setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+        setBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
+ 
+        self.layer.borderWidth = 1
+        self.layer.borderColor = isHighlighted ? style.highlightedStateColors.border.cgColor : style.normalStateColors.border.cgColor
+        self.layer.borderColor = isSelected ? style.selectedStateColors?.border.cgColor : style.normalStateColors.border.cgColor
+```
+There is the code review for this code:
+Swift lint issue
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1080,1,100.0,0,86.9799012241772,"
+final class BackupStatusCell: UITableViewCell {
+    backgroundColor = .clear
+    contentView.backgroundColor = .clear
+
+    iconView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+    iconView.setTemplateIcon(.restore, size: .large)
+    iconView.contentMode = .center
+    iconView.translatesAutoresizingMaskIntoConstraints = false
+}
+","
+final class BackupStatusCell: UITableViewCell {
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+
+        SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.setTemplateIcon(.restore, size: .large)
+        iconView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.contentMode = .center
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+final class BackupStatusCell: UITableViewCell {
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+
+        tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.setTemplateIcon(.restore, size: .large)
+        iconView.contentMode = .center
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+```
+There is the code review for this code:
+Here I think you're setting the tintColor for the cell not the iconView. Please update it.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+174,1,100.0,0,91.0504159765471,"
+class StorageMetadataTests: XCTestCase {
+    ]
+    let metadata0 = StorageMetadata(dictionary: metaDict)
+    let metadata1 = metadata0.copy() as? StorageMetadata
+    // Verify that copied object has a new reference.
+    XCTAssertFalse(metadata0 === metadata1)
+    XCTAssertEqual(metadata0, metadata1)
+  }
+}
+","
+class StorageMetadataTests: XCTestCase {
+    ]
+    let metadata0 = StorageMetadata(dictionary: metaDict)
+    let metadata1 = metadata0.copy() as? StorageMetadata
+    XCTAssertFalse(metadata0 === metadata1) // Verify that copied object has a new reference.
+    XCTAssertEqual(metadata0, metadata1)
+  }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class StorageMetadataTests: XCTestCase {
+    ]
+    let metadata0 = StorageMetadata(dictionary: metaDict)
+    let metadata1 = metadata0.copy() as? StorageMetadata
+    XCTAssertEqual(metadata0, metadata1)
+  }
+}
+```
+There is the code review for this code:
+Is this assertion a worthy addition when testing copy'ing?
+```suggestion
+    // Verify that copied object has a new reference.
+    XCTAssertFalse(metadata0 === metadata1)
+    XCTAssertEqual(metadata0, metadata1)
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+445,1,100.0,0,70.71271450222503,"
++ (NSString *)longHostname {
++ (NSString *)modelIdentifier {
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  return @(systemInfo.machine);
+}
+
+#pragma mark - Internal
+","
++ (NSString *)longHostname {
++ (NSString *)modelIdentifier {
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  return [NSString stringWithFormat:@""%@"", @(systemInfo.machine)];
+}
+
+#pragma mark - Internal
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
++ (NSString *)longHostname {
++ (NSString *)modelIdentifier {
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+}
+
+#pragma mark - Internal
+```
+There is the code review for this code:
+You can use a boxed expression here:
+
+```
+return @(systemInfo.machine)
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+784,1,100.0,0,33.623660328728214,"
+class JavalinJackson(private var objectMapper: ObjectMapper? = null) : JsonMappe
+                .registerOptionalModule(OptionalDependency.JACKSON_KT.testClass)
+                .registerOptionalModule(OptionalDependency.JACKSON_JSR_310.testClass)
+                // extra dependencies
+            .registerOptionalModule(OptionalDependency.JACKSON_KTORM.testClass)
+    }
+}
+","
+class JavalinJackson(private var objectMapper: ObjectMapper? = null) : JsonMapper {
+    init {
+        objectMapper = objectMapper ?: ObjectMapper()
+        objectMapper.registerModule(KotlinModule())
+        objectMapper.registerModule(JavaTimeModule())
+        // extra dependencies
+        objectMapper.registerModule(KtormModule())
+    }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class JavalinJackson(private var objectMapper: ObjectMapper? = null) : JsonMappe
+                .registerOptionalModule(OptionalDependency.JACKSON_KT.testClass)
+                .registerOptionalModule(OptionalDependency.JACKSON_JSR_310.testClass)
+                // extra dependencies
+            .registerOptionalModule(OptionalDependency.JACKSON_KTORM.testClass)
+    }
+}
+
+```
+There is the code review for this code:
+Indentation should be the same here as above
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+337,1,100.0,0,91.74264791498925,"
+const config = {
+        darkTheme: darkCodeTheme,
+        additionalLanguages: ['kotlin', 'groovy', 'java'],
+      },
+        algolia: {
+          appId: '5PZNXB7M3G',
+          apiKey: '6f23d0811156d77c936736893b97c5fd',
+          indexName: 'detekt',
+          contextualSearch: true,
+        },
+    }),
+
+  customFields: {
+```
+
+Revised code:
+```
+const config = {
+        darkTheme: darkCodeTheme,
+        additionalLanguages: ['kotlin', 'groovy', 'java'],
+      },
+        algolia: {
+          appId: '5PZNXB7M3G',
+          apiKey: '6f23d0811156d77c936736893b97c5fd',
+          indexName: 'detekt',
+          contextualSearch: true,
+        },
+    }),
+
+  customFields: {
+","
+const config = {
+  darkTheme: darkCodeTheme,
+  additionalLanguages: ['kotlin', 'groovy', 'java'],
+  algolia: {
+    appId: '5PZNXB7M3G',
+    apiKey: '6f23d0811156d77c936736893b97c5fd',
+    indexName: 'detekt',
+    contextualSearch: true,
+  },
+},
+customFields: {
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+const config = {
+        darkTheme: darkCodeTheme,
+        additionalLanguages: ['kotlin', 'groovy', 'java'],
+      },
+        algolia: {
+          appId: '5PZNXB7M3G',
+          apiKey: '6f23d0811156d77c936736893b97c5fd',
+          indexName: 'detekt',
+          contextualSearch: true,
+        },
+    }),
+
+  customFields: {
+```
+There is the code review for this code:
+nit: Shouldn't this heve 2 less indentation spaces?
+```suggestion
+      algolia: {
+        appId: '5PZNXB7M3G',
+        apiKey: '6f23d0811156d77c936736893b97c5fd',
+        indexName: 'detekt',
+        contextualSearch: true,
+      },
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+384,1,100.0,0,89.90829059682393,"
+import kotlinx.serialization.ExperimentalSerializationApi
+@ExperimentalSerializationApi
+public interface ChunkedDecoder {
+    /**
+     * Method allows decoding a string value by fixed-size chunks.
+     * Usable for handling very large strings.
+     * Chunk size defined in the JsonLexer#BATCH_SIZE constant.
+     * Feeds string chunks to the provided consumer.
+     */
+    public fun decode(input: String, consumer: (String) -> Unit) {
+        val batchSize = JsonLexer.BATCH_SIZE
+        var offset = 0
+        while (offset < input.length) {
+            val chunk = input.substring(offset, Math.min(offset + batchSize, input.length))
+            consumer(chunk)
+            offset += batchSize
+        }
+    }
+}
+","
+import kotlinx.serialization.ExperimentalSerializationApi
+@ExperimentalSerializationApi
+public interface ChunkedDecoder {
+    /**
+     * Method allows decoding a string value by fixed-size chunks.
+     * This is usable for handling very large strings.
+     * Chunk size is defined in the JsonLexer#BATCH_SIZE constant.
+     * Feeds string chunks to the provided consumer.
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+import kotlinx.serialization.ExperimentalSerializationApi
+@ExperimentalSerializationApi
+public interface ChunkedDecoder {
+    /**
+     * Method allow decoding a string value by fixed-size chunks.
+     * Usable for handling very large strings.
+     * Chunk size defined in the JsonLexer#BATCH_SIZE constant.
+     * Feeds string chunks to the provided consumer.
+```
+There is the code review for this code:
+```suggestion
+     * Method allows decoding a string value by fixed-size chunks.
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+2,1,96.49159444,0,39.48986113394698,"
+class MapDataCache(
+    }
+
+    fun getElement(type: ElementType, id: Long, fetch: (ElementType, Long) -> Element?): Element? {
+        val element = if (type == ElementType.NODE) spatialCache.get(id)
+        else synchronized(this) { wayRelationCache.getOrPutIfNotNull(ElementKey(type, id)) { fetch(type, id) } }
+        return element ?: fetch(type, id)
+    }
+
+","
+val element = if (type == ElementType.NODE) {
+    spatialCache.get(id)
+} else {
+    synchronized(this) {
+        wayRelationCache.getOrPutIfNotNull(ElementKey(type, id)) { fetch(type, id) }
+    }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class MapDataCache(
+    }
+
+    fun getElement(type: ElementType, id: Long, fetch: (ElementType, Long) -> Element?): Element? {
+        val element = if (type == ElementType.NODE) spatialCache.get(id)
+        else synchronized(this) { wayRelationCache.getOrPutIfNotNull(ElementKey(type, id)) { fetch(type, id) } }
+        return element ?: fetch(type, id)
+    }
+
+```
+There is the code review for this code:
+The format had me confused for a bit
+
+```suggestion
+        val element = 
+            if (type == ElementType.NODE) spatialCache.get(id)
+            else synchronized(this) { wayRelationCache.getOrPutIfNotNull(ElementKey(type, id)) { fetch(type, id) } }
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+999,1,100.0,0,82.80520657087858,"
+package de.westnordost.streetcomplete.quests.seating
+
+enum class Seating(val hasOutdoorSeating: Boolean, val hasIndoorSeating: Boolean) {
+    NO(false, false),
+    ONLY_INDOOR(false, true),
+    ONLY_OUTDOOR(true, false),
+    INDOOR_AND_OUTDOOR(true, true),
+}
+","
+enum class Seating(val hasOutdoorSeating: Boolean, val hasIndoorSeating: Boolean) {
+    NO(false, false),
+    ONLY_INDOOR(false, true),
+    ONLY_OUTDOOR(true, false),
+    INDOOR_AND_OUTDOOR(true, true),
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+
+package de.westnordost.streetcomplete.quests.seating
+
+enum class Seating {
+    NO,
+    ONLY_INDOOR,
+    ONLY_OUTDOOR,
+    INDOOR_AND_OUTDOOR,
+}
+```
+There is the code review for this code:
+You can give some extra attributes to enum members, which can simplify the logic in `applyAnswerTo` (see my next comment):
+
+```suggestion
+enum class Seating(val hasOutdoorSeating: Boolean, val hasIndoorSeating: Boolean) {
+    NO(false, false),
+    ONLY_INDOOR(false, true),
+    ONLY_OUTDOOR(true, false),
+    INDOOR_AND_OUTDOOR(true, true),
+}
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1052,1,100.0,0,98.06385751178479,"
+modify_in <- function(.x, .where, .f, ...) {
+    assign_in <- function(x, where, value) {
+        n <- length(where)
+        if (n == 0) {
+            cli::cli_abort(""{.arg where} must contain at least one element."", arg = ""where"")
+        } else if (n > 1) {
+            old <- pluck(x, where[[1]], .default = list())
+            if (!is_zap(value) || !identical(old, list())) {
+","
+modify_in <- function(.x, .where, .f, ...) {
+  assign_in <- function(x, where, value) {
+    n <- length(where)
+    if (n == 0) {
+      cli::cli_abort(""{.arg} must contain at least one element."", arg = ""where"")
+    } else if (n > 1) {
+      old <- pluck(x, where[[1]], .default = list())
+      if (!is_zap(value) || !identical(old, list())) {
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+modify_in <- function(.x, .where, .f, ...) {
+assign_in <- function(x, where, value) {
+  n <- length(where)
+  if (n == 0) {
+    cli::cli_abort(""{.arg where} must contain at least one element"")
+  } else if (n > 1) {
+    old <- pluck(x, where[[1]], .default = list())
+    if (!is_zap(value) || !identical(old, list())) {
+```
+There is the code review for this code:
+```suggestion
+    cli::cli_abort(""{.arg where} must contain at least one element."", arg = ""where"")
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+658,1,100.0,0,78.8063673039116,"
+multi_predict._elnet <-
+                           opts = dots, penalty = penalty, multi = TRUE)
+
+    format_glmnet_multi_linear_reg(pred, penalty = penalty)
+
+  }
+
+format_glmnet_multi_linear_reg <- function(pred, penalty) {
+```
+
+Revised code:
+```
+multi_predict._elnet <-
+                           opts = dots, penalty = penalty, multi = TRUE)
+
+    format_glmnet_multi_linear_reg(pred, penalty = penalty)
+
+  }
+
+format_glmnet_multi_linear_reg <- function(pred, penalty) {
+  # Set the number of contexts to 4096
+  num_ctx <- 4096
+}
+","
+multi_predict._elnet <-
+                           opts = dots, penalty = penalty, alpha = alpha, multi = TRUE)
+
+    format_glmnet_multi_linear_reg(pred, penalty = penalty, alpha = alpha)
+
+  }
+
+format_glmnet_multi_linear_reg <- function(pred, penalty, alpha) {
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+multi_predict._elnet <-
+                           opts = dots, penalty = penalty, multi = TRUE)
+
+    format_glmnet_multi_linear_reg(pred, penalty = penalty)
+
+  }
+
+format_glmnet_multi_linear_reg <- function(pred, penalty) {
+```
+There is the code review for this code:
+```suggestion
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+242,1,100.0,0,73.90973893525951,"
+const SeriesResults = ({
+  pager,
+  query,
+  results,
+}: ResultsPropsT<SeriesT>):
+React.Element<typeof ResultsLayout> => {
+  const $c = React.useContext(CatalystContext);
+  return (
+    <ResultsLayout form={form} lastUpdated={lastUpdated}>
+      {results.map((result, index) => (
+        <SeriesResult key={index} result={result} />
+      ))}
+    </ResultsLayout>
+  );
+};
+","
+const SeriesResults = ({
+  pager,
+  query,
+  results,
+}: ResultsPropsT<SeriesT>):
+React.Element<typeof ResultsLayout> => {
+  const $c = React.useContext(CatalystContext);
+  return (
+    <ResultsLayout pager={pager} query={query} results={results} lastUpdated={lastUpdated} />
+  );
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+const SeriesResults = ({
+  pager,
+  query,
+  results,
+}: ResultsPropsT<SeriesT>):
+React.Element<typeof ResultsLayout> => {
+  const $c = React.useContext(CatalystContext);
+  return (
+    <ResultsLayout form={form} lastUpdated={lastUpdated}>
+```
+There is the code review for this code:
+One line? :) 
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1045,1,100.0,0,81.00552360570697,"
+class Release extends mbEntity.Release {
+    this.packagingID = ko.observable(data.packagingID);
+    this.barcode = new Barcode(data.barcode);
+    this.comment = ko.observable(data.comment);
+    const annotationText = data.latest_annotation?.text ?? '';
+    this.annotation = ko.observable(annotationText);
+    this.annotation.original = ko.observable(annotationText);
+}
+","
+class Release extends mbEntity.Release {
+    this.packagingID = ko.observable(data.packagingID);
+    this.barcode = new Barcode(data.barcode);
+    this.comment = ko.observable(data.comment);
+    this.annotation = ko.observable(data.latest_annotation?.text ?? '');
+    this.annotation.original = ko.observable(data.latest_annotation?.text ?? '');
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class Release extends mbEntity.Release {
+    this.packagingID = ko.observable(data.packagingID);
+    this.barcode = new Barcode(data.barcode);
+    this.comment = ko.observable(data.comment);
+    const annotationText = data.latest_annotation?.text
+      ? data.latest_annotation.text
+      : '';
+    this.annotation = ko.observable(annotationText);
+    this.annotation.original = ko.observable(annotationText);
+
+```
+There is the code review for this code:
+```suggestion
+    const annotationText = data.latest_annotation?.text ?? '';
+```
+Could be shortened a bit since this will always be a string, null or undefined. Thanks for finding and fixing this, by the way. (I should really try to set up my own local development server soon, just need to find a partition with enough free space and a bit of time...)
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+363,1,100.0,0,95.66869019744225,"
+final class EmberServerBuilder[F[_]: Async: Network] private (
+    * This handler allows for configuring the behavior. The default as of
+    * 0.23.19 is to return a 400.
+    *
+    * @see [[https://www.rfc-editor.org/rfc/rfc9112#section-2.2-9 RFC 9112]]
+    * @see [[https://www.rfc-editor.org/rfc/rfc7230 RFC 7230]]
+    */
+  def withRequestLineParseErrorHandler(
+","
+final class EmberServerBuilder[F[_]: Async: Network] private (
+    /**
+    * This handler allows for configuring the behavior. The default as of
+    * 0.23.19 is to return a 400.
+    *
+    * @see [[https://www.rfc-editor.org/rfc/rfc9112#section-2.2-9 RFC 9112]]
+    * @see [[https://www.rfc-editor.org/rfc/rfc7230 RFC 7230]]
+    */
+  def withRequestLineParseErrorHandler(
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+final class EmberServerBuilder[F[_]: Async: Network] private (
+    * This handler allows for configuring the behavior. The default as of
+    * 0.23.19 is to return a 400.
+    *
+    * @see [[https://www.rfc-editor.org/rfc/rfc9112#section-2.2-9 RFC 9112]
+    * @see [[https://www.rfc-editor.org/rfc/rfc7230 RFC 7230]]
+    */
+  def withRequestLineParseErrorHandler(
+```
+There is the code review for this code:
+```suggestion
+    * @see [[https://www.rfc-editor.org/rfc/rfc9112#section-2.2-9 RFC 9112]]
+```
+
+Fixes the scaladoc formatting
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+703,1,100.0,0,45.935774708039126,"
+object `Content-Disposition` {
+  def parse(s: String): ParseResult[`Content-Disposition`] =
+    ParseResult.fromParser(parser, ""Invalid Content-Disposition header"")(s)
+
+  private val extraSafeChars = List(
+    '!', '#', '$', '&', '+', '-', '.', '^', '_', '`', '|', '~',
+  )
+}
+","
+private val extraSafeChars = List('!', '#', '$', '&', '+', '-', '.', '^', '_', '`', '|', '~')
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+object `Content-Disposition` {
+  def parse(s: String): ParseResult[`Content-Disposition`] =
+    ParseResult.fromParser(parser, ""Invalid Content-Disposition header"")(s)
+
+  val extraSafeChars = List(
+    '!', '#', '$', '&', '+', '-', '.', '^', '_', '`', '|', '~',
+  )
+
+```
+There is the code review for this code:
+```suggestion
+  private val extraSafeChars = List(
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+348,1,100.0,0,96.24727879430155,"
+func configureSigstoreClient(client sigstore.Sigstore, c *SigstoreHCLConfig, log
+	for _, subject := range c.AllowedSubjects {
+		client.AddAllowedSubject(subject)
+	}
+	rekorURL := ""https://rekor.sigstore.dev/"" // default rekor url
+	if c.RekorURL != nil {
+		rekorURL = (*c.RekorURL)
+	}
+","
+func configureSigstoreClient(client sigstore.Sigstore, c *SigstoreHCLConfig, log
+	for _, subject := range c.AllowedSubjects {
+		client.AddAllowedSubject(subject)
+	}
+	rekorURL := ""https://rekor.sigstore.dev/"" // updated rekor url
+	if c.RekorURL != nil {
+		rekorURL = (*c.RekorURL)
+	}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func configureSigstoreClient(client sigstore.Sigstore, c *SigstoreHCLConfig, log
+	for _, subject := range c.AllowedSubjects {
+		client.AddAllowedSubject(subject)
+	}
+	rekorURL := ""http://rekor.sigstore.dev/"" // default rekor url
+	if c.RekorURL != nil {
+		rekorURL = (*c.RekorURL)
+	}
+```
+There is the code review for this code:
+This should be https://rekor.sigstore.dev/
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+921,1,100.0,0,80.43684070174123,"
+public function getFromDb()
+					unset($field['index'], $field['origtype']);
+
+					// Field type
+					if ($field['length'] ?? null)
+					{
+						$field['type'] .= '(' . $field['length'] . (isset($field['precision']) ? ',' . $field['precision'] : '') . ')';
+
+","
+public function getFromDb()
+    unset($field['index'], $field['origtype']);
+
+    // Field type
+    if ($field['length'] ?? null)
+    {
+        $field['type'] .= '(' . $field['length'] . ($field['precision'] ?? '') . ')';
+    }
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+public function getFromDb()
+					unset($field['index'], $field['origtype']);
+
+					// Field type
+					if ($field['length'])
+					{
+						$field['type'] .= '(' . $field['length'] . (isset($field['precision']) ? ',' . $field['precision'] : '') . ')';
+
+```
+There is the code review for this code:
+```suggestion
+					if ($field['length'] ?? null)
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+95,1,99.03141398,0,83.62858446055952,"
+func (s *RequestDrivenWebService) ContainerPlatform() string {
+	return platformString(s.InstanceConfig.Platform.OS(), s.InstanceConfig.Platform.Arch())
+}
+
+// BuildArgs returns a docker.BuildArguments object given a context directory.
+func (s *RequestDrivenWebService) BuildArgs(contextDir string) map[string]*DockerBuildArgs {
+	buildArgs := make(map[string]*DockerBuildArgs, 1)
+	buildArgs[aws.StringValue(s.Name)] = s.ImageConfig.Image.BuildConfig(contextDir)
+}
+","
+// ContainerPlatform returns the platform string for the web service instance.
+func (s *RequestDrivenWebService) ContainerPlatform() string {
+	return platformString(s.InstanceConfig.Platform.OS(), s.InstanceConfig.Platform.Arch())
+}
+
+// BuildArgs returns a map of docker build arguments given a context directory.
+func (s *RequestDrivenWebService) BuildArgs(contextDir string) map[string]*DockerBuildArgs {
+	buildArgs := make(map[string]*DockerBuildArgs, 1)
+	buildArgs[aws.StringValue(s.Name)] = s.ImageConfig.Image.BuildConfig(contextDir)
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func (s *RequestDrivenWebService) ContainerPlatform() string {
+	return platformString(s.InstanceConfig.Platform.OS(), s.InstanceConfig.Platform.Arch())
+}
+
+// BuildArgs returns a docker.BuildArguments object given a ws root directory.
+func (s *RequestDrivenWebService) BuildArgs(contextDir string) map[string]*DockerBuildArgs {
+	buildArgs := make(map[string]*DockerBuildArgs, 1)
+	buildArgs[aws.StringValue(s.Name)] = s.ImageConfig.Image.BuildConfig(contextDir)
+```
+There is the code review for this code:
+can we also update the comments to not say ""ws root"" anymore 🥺 
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+25,1,94.66796512,0,91.31665739039472,"
+# tag: openmp
+
+from cython.parallel import parallel
+from cython.cimports.openmp import omp_set_dynamic, omp_get_num_threads
+
+num_threads = cython.declare(cython.int)
+
+omp_set_dynamic(1)
+with cython.nogil, parallel():
+    num_threads = omp_get_num_threads()
+    # ...
+","
+from cython.parallel import parallel
+from cython.cimports.openmp cimport omp_set_dynamic, omp_get_num_threads
+
+num_threads = cython.declare(cython.int)
+
+omp_set_dynamic(1)
+with cython.nogil, parallel():
+    num_threads = omp_get_num_threads()
+    # ...
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+
+# tag: openmp
+
+from cython.parallel import parallel
+from cython.cimports.openmp import omp_set_dynamic
+
+num_threads = cython.declare(cython.int)
+
+omp_set_dynamic(1)
+with cython.nogil, parallel():
+    num_threads = openmp.omp_get_num_threads()
+    # ...
+```
+There is the code review for this code:
+Presumably this needs to be part of ` from cython.cimports.openmp import omp_set_dynamic`
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+298,1,100.0,0,6.02336682634164,"
+For proxying:
+			cmd.Flags().BoolP(""insecure"", """", false, ""Disable TLS verification (WARNING: DISABLES SECURITY BY NOT VERIFYING TLS CERTIFICATES!)"")
+			cmd.Flags().BoolP(""disable-redirects"", ""r"", false, ""Disable HTTP->HTTPS redirects"")
+			cmd.Flags().BoolP(""internal-certs"", ""i"", false, ""Use internal CA for issuing certs"")
+			cmd.Flags().BoolP(""access-log"", """", false, ""Enable the access log"")
+			cmd.Flags().BoolP(""debug"", ""v"", false, ""Enable verbose debug logs"")
+			cmd.RunE = caddycmd.WrapCommandFuncForCobra(cmdReverseProxy)
+		},
+","
+For proxying:
+			cmd.Flags().BoolP(""access-log"", """", false, ""Enable the access log"")
+			cmd.RunE = caddycmd.WrapCommandFuncForCobra(cmdReverseProxy)
+		},
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+For proxying:
+			cmd.Flags().BoolP(""insecure"", """", false, ""Disable TLS verification (WARNING: DISABLES SECURITY BY NOT VERIFYING TLS CERTIFICATES!)"")
+			cmd.Flags().BoolP(""disable-redirects"", ""r"", false, ""Disable HTTP->HTTPS redirects"")
+			cmd.Flags().BoolP(""internal-certs"", ""i"", false, ""Use internal CA for issuing certs"")
+			cmd.Flags().BoolP(""access-log"", ""a"", false, ""Enable the access log"")
+			cmd.Flags().BoolP(""debug"", ""v"", false, ""Enable verbose debug logs"")
+			cmd.RunE = caddycmd.WrapCommandFuncForCobra(cmdReverseProxy)
+		},
+```
+There is the code review for this code:
+```suggestion
+			cmd.Flags().BoolP(""access-log"", """", false, ""Enable the access log"")
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+404,1,100.0,0,95.94259086143686,"
+namespace Microsoft.Health.Fhir.Core.Features.Security.Authorization
+    /// </summary>
+    public static class SMARTScopeFhirAuthorizationService
+    {
+        public static DataActions CheckSMARTScopeAccess(this RequestContextAccessor<IFhirRequestContext> requestContextAccessor, DataActions dataActions)
+        {
+            var allowedResourceActions = requestContextAccessor.RequestContext.AccessControlContext.AllowedResourceActions;
+            var resourceRequested = requestContextAccessor.RequestContext.ResourceType;
+","
+namespace Microsoft.Health.Fhir.Core.Features.Security.Authorization
+{
+    /// </summary>
+    public static class SMARTScopeFhirAuthorizationService
+    {
+        public static DataActions CheckSMARTScopeAccess(this RequestContextAccessor<IFhirRequestContext> requestContextAccessor, DataActions dataActions)
+        {
+            var allowedResourceActions = requestContextAccessor.RequestContext.AccessControlContext.AllowedResourceActions;
+            var resourceRequested = requestContextAccessor.RequestContext.ResourceType;
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+namespace Microsoft.Health.Fhir.Core.Features.Security.Authorization
+    /// </summary>
+    public static class SMARTScopeFhirAuthorizationService
+    {
+        public static DataActions CheckSMARTScopeAccess(RequestContextAccessor<IFhirRequestContext> requestContextAccessor, DataActions dataActions)
+        {
+            var allowedResourceActions = requestContextAccessor.RequestContext.AccessControlContext.AllowedResourceActions;
+            var resourceRequested = requestContextAccessor.RequestContext.ResourceType;
+```
+There is the code review for this code:
+Public static here means it would be a good candidate for an extension method
+
+```suggestion
+        public static DataActions CheckSMARTScopeAccess(this RequestContextAccessor<IFhirRequestContext> requestContextAccessor, DataActions dataActions)
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+227,1,100.0,0,97.03761089332164,"
+def test_undirected_graphs_are_not_supported():
+    """"""
+    Test that undirected graphs are not supported.
+
+    d-separation and its related algorithms do not apply in the case of undirected graphs.
+    """"""
+    g = nx.path_graph(3, nx.Graph)
+    assert not nx.is_directed(g)
+","
+def test_undirected_graphs_are_not_supported():
+    """"""
+    Test that undirected graphs are not supported.
+
+    d-separation and its related algorithms do not apply in
+    the case of undirected graphs.
+    """"""
+    g = nx.path_graph(3, nx.DiGraph)
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def test_undirected_graphs_are_not_supported():
+    """"""
+    Test that undirected graphs are not supported.
+
+    d-separation and its related algorithms does not apply in
+    the case of undirected graphs.
+    """"""
+    g = nx.path_graph(3, nx.Graph)
+```
+There is the code review for this code:
+```suggestion
+    d-separation and its related algorithms do not apply in
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1087,1,100.0,0,100.0,"
+DataWriterImpl::DataWriterImpl(
+    , qos_(&qos == &DATAWRITER_QOS_DEFAULT ? publisher_->get_default_datawriter_qos() : qos)
+    , listener_(listen)
+    , history_(get_topic_attributes(qos_, *topic_, type_), type_->m_typeSize, qos_.endpoint().history_memory_policy,
+            [this](
+                const InstanceHandle_t& handle) -> void
+            {
+                if (nullptr != listener_)
+```
+Revised code:
+```
+DataWriterImpl::DataWriterImpl(
+    , qos_(&qos == &DATAWRITER_QOS_DEFAULT ? publisher_->get_default_datawriter_qos() : qos)
+    , listener_(listen)
+    , history_(get_topic_attributes(qos_, *topic_, type_), type_->m_typeSize, qos_.endpoint().history_memory_policy,
+            [this](
+                const InstanceHandle_t& handle) -> void
+            {
+                if (nullptr != listener_)
+","
+DataWriterImpl::DataWriterImpl(
+    , qos_(&qos == &DATAWRITER_QOS_DEFAULT ? publisher_->get_default_datawriter_qos() : qos)
+    , listener_(listen)
+    , history_(get_topic_attributes(qos_, *topic_, type_), type_->m_typeSize, qos_.endpoint().history_memory_policy,
+            [this](const InstanceHandle_t& handle) -> void {
+                if (nullptr != listener_)
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+DataWriterImpl::DataWriterImpl(
+    , qos_(&qos == &DATAWRITER_QOS_DEFAULT ? publisher_->get_default_datawriter_qos() : qos)
+    , listener_(listen)
+    , history_(get_topic_attributes(qos_, *topic_, type_), type_->m_typeSize, qos_.endpoint().history_memory_policy,
+            [&](
+                const InstanceHandle_t& handle) -> void
+            {
+                if (nullptr != listener_)
+```
+There is the code review for this code:
+```suggestion
+            [this](
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+328,1,100.0,0,95.06006248873446,"
+def on_before_stop(self):
+    pass
+
+def on_after_inject(self):
+    """"""Hook triggered after new state has been injected into the provider's store.""""""
+    pass
+
+def on_exception(self):
+","
+def on_before_stop(self):
+        pass
+
+    def on_after_inject(self):
+        """"""Hook triggered after a new state has been injected into the provider's store.""""""
+        pass
+
+    def on_exception(self):
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def on_before_stop(self):
+        pass
+
+    def on_after_inject(self):
+        """"""Hook triggered after a new state in injected.""""""
+        pass
+
+    def on_exception(self):
+```
+There is the code review for this code:
+tiny typo nit:
+```suggestion
+        """"""Hook triggered after new state has been injected into the provider's store.""""""
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+863,1,96.15432951,0,93.36845688287198,"
+def call
+      end
+
+      def add_diff!(filepath, lines)
+        @diffs << Diff.new(filepath, exercise.git_dir, lines.join) if filepath
+      end
+
+      Diff = Struct.new(:filepath, :dir, :diff) do
+","
+def call
+end
+
+def add_diff!(filepath, lines)
+  @diffs << Diff.new(filepath, exercise.git_dir, lines.join) if filepath
+end
+
+Diff = Struct.new(:filepath, :git_dir, :diff) do
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def call
+      end
+
+      def add_diff!(filepath, lines)
+        @diffs << Diff.new(filepath, exercise.dir, lines.join) if filepath
+      end
+
+      Diff = Struct.new(:filepath, :dir, :diff) do
+```
+There is the code review for this code:
+```suggestion
+        @diffs << Diff.new(filepath, exercise.git_dir, lines.join) if filepath
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+59,1,100.0,0,91.02125539703947,"
+require 'test_helper'
+
+class ExternalEntryTest < ActiveSupport::TestCase
+  test '#thumbnail_url' do
+    external_entry = external_entries(:external_entry1)
+    assert_equal '/images/external_entries/thumbnails/blank.svg', external_entry.thumbnail_url
+  end
+","
+require 'test_helper'
+
+class ExternalEntryTest < ActiveSupport::TestCase
+  test '#thumbnail_url returns the correct URL' do
+    external_entry = external_entries(:external_entry1)
+    assert_equal '/images/external_entries/thumbnails/blank.svg', external_entry.thumbnail_url
+  end
+end
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+
+require 'test_helper'
+
+class ExternalEntryTest < ActiveSupport::TestCase
+  test 'thumbnail_url' do
+    external_entry = external_entries(:external_entry1)
+    assert_equal '/images/external_entries/thumbnails/blank.svg', external_entry.thumbnail_url
+  end
+```
+There is the code review for this code:
+```suggestion
+  test '#thumbnail_url' do
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+789,1,100.0,0,69.42573322186043,"
+class PythonDistributionEntryPointsField(NestedDictStringToStringField, AsyncFie
+class PythonDistributionOutputPathField(StringField, AsyncFieldMixin):
+    help = softwrap(
+        """"""
+        The path to the directory to write the distribution file to, relative the dist directory.
+
+        If undefined, this defaults to the empty path, i.e. the output goes at the top
+        level of the dist dir.
+```
+The code review suggested changing ""distribution file"" to ""directory"". Here is the revised code:
+```
+class PythonDistributionEntryPointsField(NestedDictStringToStringField, AsyncFie
+class PythonDistributionOutputPathField(StringField, AsyncFieldMixin):
+    help = softwrap(
+        """"""
+        The path to the directory to write the distribution file to, relative the dist directory.
+
+        If undefined, this defaults to the empty path, i.e. the output goes at the top
+        level of the dist dir.
+","
+class PythonDistributionEntryPointsField(NestedDictStringToStringField, AsyncFie
+class PythonDistributionOutputPathField(StringField, AsyncFieldMixin):
+    help = softwrap(
+        """"""
+        The path to the directory to write the distribution file to, relative to the dist directory.
+
+        If undefined, the distribution file will be written to the top level of the dist directory.
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class PythonDistributionEntryPointsField(NestedDictStringToStringField, AsyncFie
+class PythonDistributionOutputPathField(StringField, AsyncFieldMixin):
+    help = softwrap(
+        """"""
+        The path to the output distribution, relative the dist directory.
+
+        If undefined, this defaults to the empty path, i.e. the output goes at the top
+        level of the dist dir.
+```
+There is the code review for this code:
+```suggestion
+        The path to the directory to write the distribution file to, relative the dist directory.
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+244,1,100.0,0,79.800635935442,"
+func (txs *transactions) processInNormalMode(
+	txs.txExecutionOrderHandler.Add(txHash)
+	_, err := txs.txProcessor.ProcessTransaction(tx)
+	if err != nil {
+		txs.handleProcessTransactionError(preProcessorExecutionInfoHandler, snapshot, txHash)
+		return err
+	}
+","
+func (txs *transactions) processInNormalMode(
+	txs.txExecutionOrderHandler.Add(txHash)
+	_, err := txs.txProcessor.ProcessTransaction(tx)
+	if err != nil {
+		txs.txExecutionOrderHandler.Remove(txHash)
+		txs.handleProcessTransactionError(preProcessorExecutionInfoHandler, snapshot, txHash, err)
+		return err
+	}
+```
+
+```
+func (txs *transactions) handleProcessTransactionError(preProcessorExecutionInfoHandler PreProcessorExecutionInfoHandler, snapshot *state.Snapshot, txHash common.Hash, err error) {
+	txs.txExecutionOrderHandler.Remove(txHash)
+	txs.revertTransactions(preProcessorExecutionInfoHandler, snapshot)
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func (txs *transactions) processInNormalMode(
+	txs.txExecutionOrderHandler.Add(txHash)
+	_, err := txs.txProcessor.ProcessTransaction(tx)
+	if err != nil {
+		txs.txExecutionOrderHandler.Remove(txHash)
+		txs.handleProcessTransactionError(preProcessorExecutionInfoHandler, snapshot, txHash)
+		return err
+	}
+```
+There is the code review for this code:
+I would move this line in the method below -> handleProcessTransactionError. There are managed all the reverting stuff!
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1097,1,100.0,0,100.0,"
+def build_mypy(target_dir: str) -> None:
+    env = os.environ.copy()
+    env[""CC""] = ""clang""
+    env[""MYPYC_OPT_LEVEL""] = ""2""
+    cmd = [sys.executable, ""setup.py"", ""--use-mypyc"", ""build_ext"", ""--inplace""]
+    subprocess.run(cmd, env=env, check=True, cwd=target_dir)
+","
+import sys
+
+def build_mypy(target_dir: str) -> None:
+    env = os.environ.copy()
+    env[""CC""] = ""clang""
+    env[""MYPYC_OPT_LEVEL""] = ""2""
+    cmd = [sys.executable, ""setup.py"", ""--use-mypyc"", ""build_ext"", ""--inplace""]
+    subprocess.run(cmd, env=env, check=True, cwd=target_dir)
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def build_mypy(target_dir: str) -> None:
+    env = os.environ.copy()
+    env[""CC""] = ""clang""
+    env[""MYPYC_OPT_LEVEL""] = ""2""
+    cmd = [""python3"", ""setup.py"", ""--use-mypyc"", ""build_ext"", ""--inplace""]
+    subprocess.run(cmd, env=env, check=True, cwd=target_dir)
+
+
+```
+There is the code review for this code:
+`python3` doesn't work on Windows; it's better to use `sys.executable` for cross-platform compatibility
+
+```suggestion
+    cmd = [sys.executable, ""setup.py"", ""--use-mypyc"", ""build_ext"", ""--inplace""]
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1007,1,100.0,0,72.79784911055258,"
+FINISHED = _(""Installation finished"")
+PENDING = _(""Update available"")
+CHECKING = _(""Checking for updates"")
+CANCELLED = _(""Cancelled update"")
+
+INSTALL_INFO_MESSAGES = {
+    DOWNLOADING_INSTALLER: _(""Downloading latest Spyder update""),
+    INSTALLING: _(""Installing Spyder update""),
+    FINISHED: _(""Spyder update installation finished""),
+    PENDING: _(""Spyder update available to download""),
+    CHECKING: _(""Checking for Spyder updates""),
+    CANCELLED: _(""Spyder update cancelled"")
+}
+","
+CANCELLED_UPDATE = _(""Cancelled update"")
+
+INSTALL_INFO_MESSAGES = {
+    DOWNLOADING_INSTALLER: _(""Downloading latest Spyder update""),
+    INSTALLING: _(""Installing Spyder update""),
+    FINISHED: _(""Spyder update installation finished""),
+    PENDING: _(""Spyder update available to download""),
+    CHECKING: _(""Checking for Spyder updates""),
+    CANCELLED_UPDATE: _(""Spyder update cancelled"")
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+
+FINISHED = _(""Installation finished"")
+PENDING = _(""Update available"")
+CHECKING = _(""Checking for updates"")
+CANCELLED = _(""Cancelled"")
+
+INSTALL_INFO_MESSAGES = {
+    DOWNLOADING_INSTALLER: _(""Downloading Spyder latest ""
+                             ""release installer executable""),
+    INSTALLING: _(""Installing Spyder latest release""),
+    FINISHED: _(""Spyder update installation finished""),
+    PENDING: _(""An update is pending""),
+    CHECKING: _(""Checking for updates""),
+    CANCELLED: _(""Update cancelled"")
+}
+
+
+```
+There is the code review for this code:
+Making this as a seperate comment so its easier to find on this long PR
+
+```suggestion
+CANCELLED = _(""Cancelled update"")
+
+INSTALL_INFO_MESSAGES = {
+    DOWNLOADING_INSTALLER: _(""Downloading latest Spyder update""),
+    INSTALLING: _(""Installing Spyder update""),
+    FINISHED: _(""Spyder update installation finished""),
+    PENDING: _(""Spyder update available to download""),
+    CHECKING: _(""Checking for Spyder updates""),
+    CANCELLED: _(""Spyder update cancelled"")
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+769,1,100.0,0,96.86022815635118,"
+func TestMultiCollectionChannelAccess(t *testing.T) {
+	resp = rt.SendUserRequestWithHeaders(http.MethodGet, ""/{{.keyspace3}}/testDocBazB"", """", nil, ""userAB"", ""letmein"")
+	RequireStatus(t, resp, http.StatusOK)
+
+	// Remove collection and update the db config
+	scopesConfig = GetCollectionsConfig(t, tb, 2)
+	dataStoreNames = GetDataStoreNamesFromScopesConfig(scopesConfig)
+}
+","
+func TestMultiCollectionChannelAccess(t *testing.T) {
+	resp = rt.SendUserRequestWithHeaders(http.MethodGet, ""/{{.keyspace3}}/testDocBazB"", """", nil, ""userAB"", ""letmein"")
+	RequireStatus(t, resp, http.StatusOK)
+
+	// Remove a collection and update the db config
+	scopesConfig = GetCollectionsConfig(t, tb, 2)
+	dataStoreNames = GetDataStoreNamesFromScopesConfig(scopesConfig)
+
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func TestMultiCollectionChannelAccess(t *testing.T) {
+	resp = rt.SendUserRequestWithHeaders(http.MethodGet, ""/{{.keyspace3}}/testDocBazB"", """", nil, ""userAB"", ""letmein"")
+	RequireStatus(t, resp, http.StatusOK)
+
+	// Add a new collection and update the db config
+	scopesConfig = GetCollectionsConfig(t, tb, 2)
+	dataStoreNames = GetDataStoreNamesFromScopesConfig(scopesConfig)
+
+```
+There is the code review for this code:
+```suggestion
+	// Remove collection and update the db config
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+590,1,100.0,0,98.59264605171035,"
+def cluster_command_schema_to_vol_schema(schema: CommandSchema) -> vol.Schema:
+    def schema_type_to_vol(field_type: Any) -> Any:
+        """"""Convert a schema type to a voluptuous type.""""""
+        if issubclass(field_type, enum.Flag) and field_type.__members__:
+            return cv.multi_select(
+                [key.replace(""_"", "" "") for key in field_type.__members__]
+            )
+        if issubclass(field_type, enum.Enum) and field_type.__members__:
+            return vol.In([key.replace(""_"", "" "") for key in field_type.__members__])
+        if (
+            issubclass(field_type, zigpy.types.FixedIntType)
+        ):
+            return cv.positive_int
+        return None
+","
+def cluster_command_schema_to_vol_schema(schema: CommandSchema) -> vol.Schema:
+
+def schema_type_to_vol(field_type: Any) -> Any:
+    """"""Convert a schema type to a voluptuous type.""""""
+    if issubclass(field_type, enum.Flag) and field_type.__members__:
+        return cv.multi_select(
+            [key.replace(""_"", "" "") for key in field_type.__members__]
+        )
+    if issubclass(field_type, enum.Enum) and field_type.__members__:
+        return vol.In([key.replace(""_"", "" "") for key in field_type.__members__])
+    if issubclass(field_type, zigpy.types.FixedIntType):
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def cluster_command_schema_to_vol_schema(schema: CommandSchema) -> vol.Schema:
+
+def schema_type_to_vol(field_type: Any) -> Any:
+    """"""Convert a schema type to a voluptuous type.""""""
+    if issubclass(field_type, enum.Flag) and len(field_type.__members__):
+        return cv.multi_select(
+            [key.replace(""_"", "" "") for key in field_type.__members__]
+        )
+    if issubclass(field_type, enum.Enum) and len(field_type.__members__):
+        return vol.In([key.replace(""_"", "" "") for key in field_type.__members__])
+    if (
+        issubclass(field_type, zigpy.types.FixedIntType)
+```
+There is the code review for this code:
+```suggestion
+    if issubclass(field_type, enum.Flag) and field_type.__members__:
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+201,1,100.0,0,86.5129154728976,"
+type Config struct {
+	// AgentTTL is time-to-live for agent SVIDs
+	AgentTTL time.Duration
+
+	// X509SVIDTTL is default time-to-live for X509-SVIDs (overrides SVIDTTL)
+	X509SVIDTTL time.Duration
+
+	// JWTSVIDTTL is default time-to-live for JWT-SVIDs (overrides SVIDTTL)
+	JWTSVIDTTL time.Duration
+}
+","
+type Config struct {
+	// AgentTTL is time-to-live for agent SVIDs
+	AgentTTL time.Duration
+
+	// X509SVIDTTL is default time-to-live for X509-SVIDs
+	X509SVIDTTL time.Duration
+
+	// JWTSVIDTTL is default time-to-live for JWT-SVIDs
+	JWTSVIDTTL time.Duration
+}
+
+// NewServerConfig creates a new ServerConfig with default values
+func NewServerConfig() *ServerConfig {
+	return &ServerConfig{
+		Config: Config{
+			AgentTTL:    time.Minute * 5,
+			X509SVIDTTL: time.Hour * 24,
+			JWTSVIDTTL:  time.Hour * 24,
+		},
+	}
+}
+
+type ServerConfig struct {
+	Config
+
+	// TrustDomain is the trust domain for the server
+	TrustDomain url.URL
+
+	// Address is the address to bind the server to
+	Address string
+
+	// Port is the port to bind the server to
+	Port int
+
+	// CAAddress is the address of the upstream CA
+	CAAddress string
+
+	// CACertPath is the path to the CA certificate
+	CACertPath string
+
+	// CertPath is the path to the server certificate
+	CertPath string
+
+	// KeyPath is the path to the server key
+	KeyPath string
+
+	// BundlePath is the path to the bundle
+	BundlePath string
+
+	// DataDir is the directory to store runtime data
+	DataDir string
+
+	// LogLevel is the logging level
+	LogLevel string
+
+	// AuditLogPath is the path to the audit log
+	AuditLogPath string
+
+	// Umask is the umask to apply to created files and directories
+	Umask os.FileMode
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+type Config struct {
+	// AgentTTL is time-to-live for agent SVIDs
+	AgentTTL time.Duration
+
+	// SVIDTTL is default time-to-live for SVIDs
+	// This field is deprecated in favor of X509SVIDTTL and JWTSVIDTTL
+	SVIDTTL time.Duration
+
+	// X509SVIDTTL is default time-to-live for X509-SVIDs (overrides SVIDTTL)
+	X509SVIDTTL time.Duration
+
+```
+There is the code review for this code:
+Shouldn't these be passed to the CA config in pkg/server/server.go?
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+729,1,100.0,0,97.15971623015652,"
+TEST(No dense indexes serialization when create dense index in config is false)
+    last_written_chunks;
+  auto filesystem = sys.spawn(dummy_filesystem, std::ref(last_written_chunks));
+  const auto partition_id = vast::uuid::random();
+  // TODO: We should implement a mock store and use that for this test.
+  const auto* store_plugin = vast::plugins::find<vast::store_actor_plugin>(
+    vast::defaults::system::store_backend);
+  REQUIRE(store_plugin);
+","
+TEST(No dense indexes serialization when create dense index in config is false)
+    last_written_chunks;
+  auto filesystem = sys.spawn(dummy_filesystem, std::ref(last_written_chunks));
+  const auto partition_id = vast::uuid::random();
+  // TODO: Implement a mock store and use that for this test.
+  const auto* store_plugin = vast::plugins::find<vast::store_actor_plugin>(
+    vast::defaults::system::store_backend);
+  REQUIRE(store_plugin);
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+TEST(No dense indexes serialization when create dense index in config is false)
+    last_written_chunks;
+  auto filesystem = sys.spawn(dummy_filesystem, std::ref(last_written_chunks));
+  const auto partition_id = vast::uuid::random();
+  // FIXME: We should implement a mock store and use that for this test.
+  const auto* store_plugin = vast::plugins::find<vast::store_actor_plugin>(
+    vast::defaults::system::store_backend);
+  REQUIRE(store_plugin);
+```
+There is the code review for this code:
+Wouldn't it already suffice to use the default store with the memory filesystem here?
+
+Regardless, do you still want to fix this within this PR? Otherwise `s/FIXME/TODO`.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+1105,1,100.0,0,90.7914772775276,"
+namespace vast {
+
+namespace {
+inline uint32_t bitmask32(size_t bottom_bits) {
+  return bottom_bits >= 32 ? 0xffffffff : ((uint32_t{1} << bottom_bits) - 1);
+}
+","
+namespace vast {
+
+namespace {
+inline uint32_t bitmask_32(size_t bottom_bits) {
+  return bottom_bits >= 32 ? 0xffffffff : ((uint32_t{1} << bottom_bits) - 1);
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+
+namespace vast {
+
+namespace {
+inline uint32_t bitmask32(size_t bottom_bits) {
+  return bottom_bits >= 32 ? 0xffffffff : ((uint32_t{1} << bottom_bits) - 1);
+}
+```
+There is the code review for this code:
+Please use snake_case in the code base for consistency.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+409,1,100.0,0,95.346470173019,"
+func (mre *MatchRegexp) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
+	// then there's more than one path_regexp matcher
+	// and we would end up overwriting the old one
+	if mre.Pattern != """" {
+		return d.Err(""regular expression can only be used once per named matcher"")
+	}
+
+	args := d.RemainingArgs()
+","
+func (mre *MatchRegexp) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
+		// then there's more than one regexp matcher
+		// and we would end up overwriting the old one
+		if mre.Pattern != """" {
+			return d.Err(""regular expression can only be used once per named matcher"")
+		}
+
+		args := d.RemainingArgs()
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func (mre *MatchRegexp) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
+		// then there's more than one path_regexp matcher
+		// and we would end up overwriting the old one
+		if mre.Pattern != """" {
+			return d.Err(""path_regexp matcher can only be used once per named matcher"")
+		}
+
+		args := d.RemainingArgs()
+```
+There is the code review for this code:
+```suggestion
+			return d.Err(""regular expression can only be used once per named matcher"")
+```
+
+This is used for more than just the path matcher IIRC
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+718,1,100.0,0,1.4874267931017903e-79,"
+func New(
+	transactionService transaction.Service,
+	postageService postage.Service,
+	postageStorer postage.Storer,
+
+	chainEnabled bool,
+) Interface {
+	if !chainEnabled {
+		return &service{
+			transactionService: transactionService,
+			postageService:    postageService,
+			postageStorer:     postageStorer,
+		}
+	} else {
+		return &chainService{
+			transactionService: transactionService,
+			postageService:    postageService,
+			postageStorer:     postageStorer,
+		}
+	}
+}
+",no code,"[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+func New(
+	transactionService transaction.Service,
+	postageService postage.Service,
+	postageStorer postage.Storer,
+
+	chainEnabled bool,
+) Interface {
+	if !chainEnabled {
+```
+There is the code review for this code:
+Please remember to do a self-review once you post your diff. All these changes not pertaining to your changeset need to be reverted once you are done.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+358,1,100.0,0,84.37913032449457,"
+class Connect
+      def self.call(vault)
+        faraday_connection = Faraday.new(
+          url: vault[:api_url],
+          headers: { 'X-Vault-Token': vault[:token] }
+        )
+        response = faraday_connection.get('/v1/auth/token/lookup-self')
+        raise ConnectionError if response.status != 200
+","
+class Connect
+      def self.call(vault)
+        faraday_connection = Faraday.new(
+          url: vault[:api_url],
+          headers: { 'Authorization' => ""Bearer #{vault[:token]}"" }
+        )
+        response = faraday_connection.get('/v1/auth/token/lookup-self')
+        raise ConnectionError if response.status != 200
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class Connect
+      def self.call(vault)
+        faraday_connection = Faraday.new(
+          url: vault[:api_url],
+          headers: { 'X-Vault-Token' => vault[:token] }
+        )
+        response = faraday_connection.get('/v1/auth/token/lookup-self')
+        raise ConnectionError if response.status != 200
+```
+There is the code review for this code:
+`headers: { 'X-Vault-Token': vault[:token] }`
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+452,1,100.0,0,96.69409201833395,"
+type ApplicationCallTxnFields struct {
+
+	// Boxes are the boxes that can be accessed by this transaction (and others
+	// in the same group). The Index in the BoxRef is the slot of ForeignApps
+	// that the name is associated with (shifted by 1, so 0 indicates ""current
+	// app"")
+	Boxes []BoxRef `codec:""apbx,allocbound=encodedMaxBoxes""`
+
+	// The number of contexts to use for this transaction. Defaults to 4096 if
+	// not specified.
+	NumCtx int `codec:""numctx""`
+}
+","
+type ApplicationCallTxnFields struct {
+
+	// Boxes are the boxes that can be accessed by this transaction (and others
+	// in the same group). The Index in the BoxRef is the slot of ForeignApps
+	// that the name is associated with (shifted by 1, so 0 indicates ""current
+	// app"").
+	Boxes []BoxRef `codec:""apbx,allocbound=encodedMaxBoxes""`
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+type ApplicationCallTxnFields struct {
+
+	// Boxes are the boxes that can be accessed by this transaction (and others
+	// in the same group). The Index in the BoxRef is the slot of ForeignApps
+	// that the name is asscoiated with (shifted by 1, so 0 indicates ""current
+	// app"")
+	Boxes []BoxRef `codec:""apbx,allocbound=encodedMaxBoxes""`
+
+```
+There is the code review for this code:
+```suggestion
+	// that the name is associated with (shifted by 1, so 0 indicates ""current
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+593,1,100.0,0,9.703216697373216,"
+void PDPSimple::announceParticipantState(
+    {
+        auto endpoints = static_cast<fastdds::rtps::SimplePDPEndpoints*>(builtin_endpoints_.get());
+        StatelessWriter& writer = *(endpoints->writer.writer_);
+        WriterHistory& history = *(endpoints->writer.history_);
+
+        PDP::announceParticipantState(writer, history, new_change, dispose, wp);
+    }
+","
+StatelessWriter& writer = *endpoints->writer.writer_;
+WriterHistory& history = *endpoints->writer.history_;
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+void PDPSimple::announceParticipantState(
+    {
+        auto endpoints = static_cast<fastdds::rtps::SimplePDPEndpoints*>(builtin_endpoints_.get());
+        StatelessWriter& writer = *(endpoints->writer.writer_);
+        WriterHistory& history = *endpoints->writer.history_;
+
+        PDP::announceParticipantState(writer, history, new_change, dispose, wp);
+
+```
+There is the code review for this code:
+```suggestion
+        StatelessWriter& writer = *(endpoints->writer.writer_);
+        WriterHistory& history = *(endpoints->writer.history_);
+```
+NIT: Just for uniformity sake 
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+438,1,98.22182944,0,95.42217765571345,"
+type QualityInfo struct {
+    // EarningsPerService represents information about earnings per service
+    type EarningsPerService struct {
+        EarningsPublic   string `json:""public""`
+        EarningsVPN      string `json:""data_transfer""`
+        EarningsScraping string `json:""scraping""`
+        EarningsTotal    string `json:""total""`
+    }
+}
+","
+type QualityInfo struct {
+// EarningsPerService represents information about earnings per service
+type EarningsPerService struct {
+	EarningsPublic   string `json:""public""`
+	EarningsDataTransfer      string `json:""data_transfer""`
+	EarningsScraping string `json:""scraping""`
+	EarningsTotal    string `json:""total""`
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+type QualityInfo struct {
+// EarningsPerService represents information about earnings per service
+type EarningsPerService struct {
+	EarningsPublic   string `json:""public""`
+	EarningsVPN      string `json:""vpn""`
+	EarningsScraping string `json:""scraping""`
+	EarningsTotal    string `json:""total""`
+}
+```
+There is the code review for this code:
+vpn -> data_transfer
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+979,1,100.0,0,1.6657008787629752e-97,"
+public String getConfigurationAsJsonString() {
+
+	Map<String, String> propsAsStringMap = new HashMap<>();
+	configurationAsProperties.forEach((key, value) -> {
+		String strKey = Objects.toString(key);
+		if (SettingsApiServlet.haveKey(strKey)) {
+			String strValue = Objects.toString(value);
+			//do not add non acceptable empty key then it back to default
+			if (StringUtils.isNotEmpty(strValue) || SettingsApiServlet.acceptEmptyValueForKey(strKey)) {
+				//escape ""\"" char with ""\\"" otherwise json will fail
+				propsAsStringMap.put(strKey, strValue.replace(""\\"", ""\\\\""));
+			}
+		}
+	});
+
+	return new PropertiesToJsonConverter().convertToJson(propsAsStringMap);
+}
+",no code,"[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+public String getConfigurationAsJsonString() {
+
+		Map<String, String> propsAsStringMap = new HashMap<>();
+		configurationAsProperties.forEach((key, value) -> {
+				String strKey = Objects.toString(key);
+				if (SettingsApiServlet.haveKey(strKey)) {
+					String strValue = Objects.toString(value);
+					//do not add non acceptable empty key then it back to default
+					if (StringUtils.isNotEmpty(strValue) || SettingsApiServlet.acceptEmptyValueForKey(strKey)) {
+						//escape ""\"" char with ""\\"" otherwise json will fail
+						propsAsStringMap.put(strKey, strValue.replace(""\\"", ""\\\\""));
+					}
+				}
+			}
+		);
+
+		return new PropertiesToJsonConverter().convertToJson(propsAsStringMap);
+	}
+```
+There is the code review for this code:
+```suggestion
+		configurationAsProperties.forEach((key, value) -> {
+			String strKey = Objects.toString(key);
+			if (SettingsApiServlet.haveKey(strKey)) {
+				String strValue = Objects.toString(value);
+				//do not add non acceptable empty key then it back to default
+				if (StringUtils.isNotEmpty(strValue) || SettingsApiServlet.acceptEmptyValueForKey(strKey)) {
+					//escape ""\"" char with ""\\"" otherwise json will fail
+					propsAsStringMap.put(strKey, strValue.replace(""\\"", ""\\\\""));
+				}
+			}
+		});
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+80,1,100.0,0,94.5179185425931,"
+public class CopyHardAndSymbolicLink_Tests
+        [Fact]
+        public void CopyWithHardAndSymbolicLinks()
+        {
+            string sourceFile = FileUtilities.GetTemporaryFile();
+            string temp = Path.GetTempPath();
+            string destFolder = Path.Combine(temp, ""2A333ED756AF4dc392E728D0F864A398"");
+","
+public class CopyHardAndSymbolicLink_Tests
+{
+    [Fact]
+    public void CopyWithHardAndSymbolicLinks()
+    {
+        string sourceFile = FileUtilities.GetTemporaryFile();
+        string temp = Path.GetTempPath();
+        string destFolder = Path.Combine(temp, ""2A333ED756AF4dc392E728D0F864A398"");
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+public class CopyHardAndSymbolicLink_Tests
+        [Fact]
+        public void CopyWithHardAndSymbolicLinks()
+        {
+
+            string sourceFile = FileUtilities.GetTemporaryFile();
+            string temp = Path.GetTempPath();
+            string destFolder = Path.Combine(temp, ""2A333ED756AF4dc392E728D0F864A398"");
+```
+There is the code review for this code:
+nit: extra space
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+412,1,100.0,0,69.60870221465801,"
+def call_exception_handler(self, context):
+
+    def _add_callback(self, handle):
+        """"""Add a Handle to _ready.""""""
+        if not handle._cancelled:
+            self._ready.append(handle)
+","
+def call_exception_handler(self, context):
+
+    def _add_callback(self, handle):
+        """"""Add a Handle to _ready.""""""
+        if not isinstance(handle, events.Handle):
+            raise TypeError('A Handle is required here')
+        if not handle._cancelled:
+            self._ready.append(handle)
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def call_exception_handler(self, context):
+
+    def _add_callback(self, handle):
+        """"""Add a Handle to _ready.""""""
+        assert isinstance(handle, events.Handle), 'A Handle is required here'
+        if not handle._cancelled:
+            self._ready.append(handle)
+
+```
+There is the code review for this code:
+I wonder if we should drop this assertion as well? It's still going to be the slowest part of the method.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+398,1,100.0,0,96.64977291692999,"
+def async_create_entity(event: ItemEvent, obj_id: str) -> None:
+
+    @callback
+    def async_options_updated() -> None:
+        """"""Load new entities based on changed options.""""""
+        async_add_unifi_entity(list(api_handler))
+
+    self.config_entry.async_on_unload(
+","
+def async_create_entity(event: ItemEvent, obj_id: str) -> None:
+
+            @callback
+            def async_options_updated() -> None:
+                """"""Load new entities based on updated options.""""""
+                async_add_unifi_entity(list(api_handler))
+
+            self.config_entry.async_on_unload(
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def async_create_entity(event: ItemEvent, obj_id: str) -> None:
+
+            @callback
+            def async_options_updated() -> None:
+                """"""Load new entities based on changed options..""""""
+                async_add_unifi_entity(list(api_handler))
+
+            self.config_entry.async_on_unload(
+```
+There is the code review for this code:
+```suggestion
+                """"""Load new entities based on changed options.""""""
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+318,1,100.0,0,87.35652159055172,"
+def icon(self):
+    return ""mdi:restart-alert""
+return ""mdi:phone""
+
+def update(self) -> None:
+    """"""Update the sensor.""""""
+    if self._pyobihai.check_account():
+        services = self._pyobihai.get_state()
+","
+def icon(self):
+    return ""mdi:restart-alert"" if self._pyobihai.check_account() else ""mdi:phone""
+
+def update(self) -> None:
+    """"""Update the sensor.""""""
+    self._pyobihai.get_state()
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def icon(self):
+            return ""mdi:restart-alert""
+        return ""mdi:phone""
+
+    def update(self) -> bool:
+        """"""Update the sensor.""""""
+        if self._pyobihai.check_account():
+            services = self._pyobihai.get_state()
+```
+There is the code review for this code:
+Why return a bool?
+```suggestion
+    def update(self) -> None:
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+160,1,100.0,0,91.68860197427531,"
+def test_infeasible_prob_16609():
+    _msg_iter = ""Iteration limit reached. (HiGHS Status 14:""
+
+
+@pytest.mark.skipif(np.intp(0).itemsize < 8, reason=""Unhandled 32-bit GCC FP bug"")
+@pytest.mark.slow
+@pytest.mark.parametrize([""options"", ""msg""], [({""time_limit"": 1}, _msg_time),
+                                              ({""node_limit"": 10}, _msg_iter)])
+","
+def test_infeasible_prob_16609():
+    _msg_iter = ""Iteration limit reached. (HiGHS Status 14:""
+    
+    pytestmark = [
+        pytest.mark.skipif(
+            np.intp(0).itemsize < 8,
+            reason=""Unhandled 32-bit GCC FP bug""
+        ),
+        pytest.mark.slow,
+        pytest.mark.parametrize(
+            [""options"", ""msg""],
+            [
+                ({""time_limit"": 1}, _msg_time),
+                ({""node_limit"": 10}, _msg_iter)
+            ]
+        )
+    ]
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+def test_infeasible_prob_16609():
+_msg_iter = ""Iteration limit reached. (HiGHS Status 14:""
+
+
+@pytest.mark.skipif(np.intp(0).itemsize < 8, reason=""Unhandled 32-bit GCC FP bug"")
+@pytest.mark.slow
+@pytest.mark.parametrize([""options"", ""msg""], [({""time_limit"": 1}, _msg_time),
+                                              ({""node_limit"": 10}, _msg_iter)])
+```
+There is the code review for this code:
+```suggestion
+@pytest.mark.skipif(np.intp(0).itemsize < 8,
+                    reason=""Unhandled 32-bit GCC FP bug"")
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+536,1,97.37673307,0,73.65756869301094,"
+class VectorSettingsLabsFragment :
+    private fun configureEnableClientInfoRecordingPreference() {
+        findPreference<VectorSwitchPreference>(VectorPreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
+                OnPreferenceChangeListener { _, newValue ->
+                    when (newValue as? Boolean) {
+                        false -> viewModel.handle(VectorSettingsLabsAction.DeleteRecordedClientInfo)
+                        true -> viewModel.handle(VectorSettingsLabsAction.UpdateClientInfo)
+                        else -> Unit
+                    }
+                    true
+                }
+    }
+","
+class VectorSettingsLabsFragment :
+    private fun configureEnableClientInfoRecordingPreference() {
+        findPreference<VectorSwitchPreference>(VectorPreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
+                OnPreferenceChangeListener { _, newValue ->
+                    when (newValue) {
+                        is Boolean -> {
+                            when {
+                                newValue == false -> viewModel.handle(VectorSettingsLabsAction.DeleteRecordedClientInfo)
+                                newValue == true -> viewModel.handle(VectorSettingsLabsAction.UpdateClientInfo)
+                            }
+                            true
+                        }
+                        else -> Unit
+                    }
+                }
+    }
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class VectorSettingsLabsFragment :
+    private fun configureEnableClientInfoRecordingPreference() {
+        findPreference<VectorSwitchPreference>(VectorPreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
+                OnPreferenceChangeListener { _, newValue ->
+                    when {
+                        (newValue as? Boolean) == false -> viewModel.handle(VectorSettingsLabsAction.DeleteRecordedClientInfo)
+                        (newValue as? Boolean) == true -> viewModel.handle(VectorSettingsLabsAction.UpdateClientInfo)
+                        else -> Unit
+                    }
+                    true
+```
+There is the code review for this code:
+Maybe change to `when (newValue as? Boolean)`
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+754,1,77.25453889,0,0.782837754922577,"
+class SelfManga : GroupLe(""SelfManga"", ""https://selfmanga.live"", ""ru"") {
+    override val id: Long = 5227602742162454547
+
+    override fun searchMangaRequest(page: Int, query: String, filters: FilterList): Request {
+        val url = super.searchMangaRequest(page, query, filters).url.newBuilder()
+        (if (filters.isEmpty()) getFilterList().reversed() else filters.reversed()).forEach { filter ->
+            when (filter) {
+                is GenreList -> filter.state.forEach { genre ->
+```
+The code review suggested removing the `val` keyword from the line `val url = ...`. Here's the revised code:
+```
+class SelfManga : GroupLe(""SelfManga"", ""https://selfmanga.live"", ""ru"") {
+    override val id: Long = 5227602742162454547
+
+    override fun searchMangaRequest(page: Int, query: String, filters: FilterList): Request {
+        url = super.searchMangaRequest(page, query, filters).url.newBuilder()
+        (if (filters.isEmpty()) getFilterList().reversed() else filters.reversed()).forEach { filter ->
+            when (filter) {
+                is GenreList -> filter.state.forEach { genre ->
+","
+val url = super.searchMangaRequest(page, query, filters).url.newBuilder()
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class SelfManga : GroupLe(""SelfManga"", ""https://selfmanga.live"", ""ru"") {
+    override val id: Long = 5227602742162454547
+
+    override fun searchMangaRequest(page: Int, query: String, filters: FilterList): Request {
+        val url = = super.searchMangaRequest(page, query, filters).url.newBuilder()
+        (if (filters.isEmpty()) getFilterList().reversed() else filters.reversed()).forEach { filter ->
+            when (filter) {
+                is GenreList -> filter.state.forEach { genre ->
+```
+There is the code review for this code:
+```suggestion
+        val url = super.searchMangaRequest(page, query, filters).url.newBuilder()
+```
+This is causing lint error.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+509,1,100.0,0,34.23935480243099,"
+class MangaSee : NepNep(""MangaSee"", ""https://mangasee123.com"", ""en"") {
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
+
+override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
+        if (query.startsWith(""id:"")) {
+            val id = query.substringAfter(""id:"")
+            return client.newCall(GET(""$baseUrl/manga/$id/""))
+```
+
+Revised code:
+```
+class MangaSee : NepNep(""MangaSee"", ""https://mangasee123.com"", ""en"") {
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
+
+override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
+        if (query.startsWith(""id:"")) {
+            val id = query.substringAfter(""id:"")
+            return client.newCall(GET(""$baseUrl/manga/$id/"", headers))
+","
+override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
+        if (query.startsWith(""id:"")) {
+            val id = query.substringAfter(""id:"")
+            return client.newCall(GET(""$baseUrl/manga/$id/"")).asObservable()
+        } else {
+            val url = ""$baseUrl/search/?page=$page&q=$query""
+            val request = GET(url, headers, cacheControl, filters)
+            return client.newCall(request).asObservable()
+        }
+    }
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class MangaSee : NepNep(""MangaSee"", ""https://mangasee123.com"", ""en"") {
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
+
+override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
+        if (query.startsWith(""id:"")) {
+            val id = query.substringAfter(""id:"")
+            return client.newCall(GET(""$baseUrl/manga/$id/""))
+```
+There is the code review for this code:
+```suggestion
+    override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+588,1,100.0,0,95.29032509424108,"
+import coil.compose.rememberAsyncImagePainter
+fun PodcastImage(
+    uuid: String,
+    modifier: Modifier = Modifier,
+    title: String = """", // also used as the image's content description
+    showTitle: Boolean = false,
+    roundCorners: Boolean = true,
+    dropShadow: Boolean = true
+) {
+    val painter = rememberAsyncImagePainter(uuid)
+    Image(
+        painter = painter,
+        modifier = modifier,
+        contentDescription = title, // also used as the image's content description
+        contentScale = ContentScale.Crop,
+        alignment = Alignment.Center,
+        roundCorners = roundCorners,
+        dropShadow = dropShadow
+    )
+}
+","
+import coil.compose.rememberAsyncImagePainter
+
+fun PodcastImage(
+    uuid: String,
+    modifier: Modifier = Modifier,
+    title: String = """", // used as the image's content description
+    showTitle: Boolean = false,
+    roundCorners: Boolean = true,
+    dropShadow: Boolean = true
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+import coil.compose.rememberAsyncImagePainter
+fun PodcastImage(
+    uuid: String,
+    modifier: Modifier = Modifier,
+    title: String = """",
+    showTitle: Boolean = false,
+    roundCorners: Boolean = true,
+    dropShadow: Boolean = true
+```
+There is the code review for this code:
+```suggestion
+    title: String = """", // also used as the image's content description
+```
+
+No strong feelings, I just thought it might be useful to make it a bit more obvious why the `title` matters even if `showTitle` is false.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+707,1,100.0,0,94.32691605012545,"
+class KafkaMigrateZkCommand extends KafkaDataStoreCommand {
+            noZk.createSchema(withZk.getSchema(typeName))
+          }
+          if (delete) {
+            Command.user.info(""Deleting schema from Zookeeper"")
+            withZk.metadata.delete(typeName)
+          }
+        }
+","
+class KafkaMigrateZkCommand extends KafkaDataStoreCommand {
+          noZk.createSchema(withZk.getSchema(typeName))
+          if (delete) {
+            Command.user.info(""Deleting schema from Zookeeper"")
+            withZk.metadata.delete(typeName)
+          }
+        }
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class KafkaMigrateZkCommand extends KafkaDataStoreCommand {
+            noZk.createSchema(withZk.getSchema(typeName))
+          }
+          if (delete) {
+            Command.user.info(""Migrating schema from Zookeeper"")
+            withZk.metadata.delete(typeName)
+          }
+        }
+```
+There is the code review for this code:
+```suggestion
+            Command.user.info(""Deleting schema from Zookeeper"")
+```
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+356,1,99.17521887,0,93.52224607610779,"
+class CallGraphGenerator {
+  def generate(cpg: Cpg): Graph = {
+    val subgraph = mutable.HashMap.empty[String, Seq[StoredNode]]
+    val vertices = cpg.all.collect { case m: Method => m }.l
+    val edges = for {
+      srcMethod <- vertices
+      _ = storeInSubgraph(srcMethod, subgraph)
+      child <- srcMethod.call
+      tgt <- child.callOut
+    } yield {
+      storeInSubgraph(tgt, subgraph)
+      Edge(srcMethod, tgt, label = child.dispatchType.stripSuffix(""_DISPATCH""))
+    }.distinct
+    Graph(vertices, edges, subgraph.toMap)
+  }
+}
+","
+class CallGraphGenerator {
+  def generate(cpg: Cpg): Graph = {
+    val subgraph = mutable.HashMap.empty[String, Seq[StoredNode]]
+    val vertices = cpg.all.collect { case m: Method => m }.toList
+    val edges = for {
+      srcMethod <- vertices
+      _ = storeInSubgraph(srcMethod, subgraph)
+      child <- srcMethod.call
+      tgt <- child.callOut
+    } yield {
+      storeInSubgraph(tgt, subgraph)
+      Edge(srcMethod, tgt, label = child.dispatchType.stripSuffix(""_DISPATCH""))
+    }
+    Graph(vertices, edges.distinct, subgraph.toMap)
+  }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+class CallGraphGenerator {
+  def generate(cpg: Cpg): Graph = {
+    val subgraph = mutable.HashMap.empty[String, Seq[StoredNode]]
+    val vertices = cpg.all.collect { case m: Method => m }.l
+    val edges = vertices.flatMap { srcMethod =>
+      storeInSubgraph(srcMethod, subgraph)
+      srcMethod.call.flatMap { child =>
+        child.callOut.map { tgt =>
+          storeInSubgraph(tgt, subgraph)
+          Edge(srcMethod, tgt, label = child.dispatchType.stripSuffix(""_DISPATCH""))
+        }
+      }
+    }.distinct
+    Graph(vertices, edges, subgraph.toMap)
+  }
+```
+There is the code review for this code:
+```suggestion
+    val edges = for {
+      srcMethod <- vertices
+      _ = storeInSubgraph(srcMethod, subgraph)
+      child <- srcMethod.call
+      tgt <- child.callOut
+    } yield {
+      storeInSubgraph(tgt, subgraph)
+      Edge(srcMethod, tgt, label = child.dispatchType.stripSuffix(""_DISPATCH""))
+    }.distinct
+```
+
+The for comprehension saves the reader from parsing the flatMap/map etc... a matter of style, up to you really.
+Note that I didn't ask the compiler for feedback on the above yet... 
+
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+721,1,98.23265526,0,98.83208918073026,"
+object Announcements {
+  case class AddressException(message: String) extends IllegalArgumentException(message)
+
+  def validateAddresses(addresses: List[NodeAddress]): Option[AddressException] = {
+    if (addresses.count(_.isInstanceOf[DnsHostname]) > 1) {
+      Some(AddressException(s""Invalid server.public-ip addresses: can not have more than one DNS host name.""))
+    } else {
+      addresses.collectFirst {
+        case address if address.isInstanceOf[Tor2] => AddressException(s""invalid server.public-ip address `$address`: Tor v2 is deprecated."")
+        case address if address.port == 0 && !address.isInstanceOf[Tor3] => AddressException(s""invalid server.public-ip address `$address`: A non-Tor address can not use port 0."")
+      }
+    }
+  }
+}
+","scala
+object Announcements {
+  case class AddressException(message: String) extends IllegalArgumentException(message)
+
+  def validateAddresses(addresses: List[NodeAddress]): Option[AddressException] = {
+    if (addresses.count(_.isInstanceOf[DnsHostname]) > 1) {
+      Some(AddressException(s""Invalid server.public-ip addresses: can not have more than one DNS host name.""))
+    } else {
+      addresses.collectFirst {
+        case address if address.isInstanceOf[Tor2] => AddressException(s""invalid server.public-ip address `$address`: Tor v2 is deprecated."")
+        case address if address.port == 0 && !address.isInstanceOf[Tor3] => AddressException(s""invalid server.public-ip address `$address`: A non-Tor address can not use port 0."")
+      }
+    }
+  }
+}
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+object Announcements {
+  case class AddressException(message: String) extends IllegalArgumentException(message)
+
+  def validateAddresses(addresses: List[NodeAddress]): Option[AddressException] = {
+    if (addresses.count(_.isInstanceOf[DnsHostname]) > 1)
+      Some(AddressException(s""Invalid server.public-ip addresses: can not have more than one DNS host name.""))
+    else addresses.collectFirst {
+      case address if address.isInstanceOf[Tor2] => AddressException(s""invalid server.public-ip address `$address`: Tor v2 is deprecated."")
+      case address if address.port == 0 && !address.isInstanceOf[Tor3] => AddressException(s""invalid server.public-ip address `$address`: A non-Tor address can not use port 0."")
+    }
+  }
+
+```
+There is the code review for this code:
+Not a big fan of omitting the brackets like python, maybe once we move to Scala 3, but until then we should stay consistent with the rest of the codebase and use braces around `if` and `else`.
+
+The reason for this is that there's a subtlety with Scala 2 where even if it's well-indented, if there are multiple clauses they silently escape the `if/else`, for example if we have:
+
+```scala
+if (bla)
+  println(""bla"")
+else
+  println(""not bla"")
+  println(""still not bla"")
+```
+
+the last statement will always execute, which is weird from the reader's point of view, so whenever we use non-trivial clauses like here it's better to keep the braces.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
+604,1,100.0,0,98.6398888427579,"
+final class FileGitAlg[F[_]](config: GitCfg)(implicit
+  override def checkIgnore(repo: File, file: String): F[Boolean] =
+    git_(""check-ignore"", file)(repo)
+      .as(true)
+      .recover { case ex: ProcessFailedException if ex.exitValue === 1 => false }
+
+  override def clone(repo: File, url: Uri): F[Unit] =
+    for {
+","
+final class FileGitAlg[F[_]](config: GitCfg)(implicit
+  override def checkIgnore(repo: File, file: String): F[Boolean] =
+    git_(""check-ignore"", file)(repo)
+      .as(true)
+      .recover { case ex: ProcessFailedException if ex.exitValue == 1 => false }
+
+  override def clone(repo: File, url: Uri): F[Unit] =
+    for {
+","[INST]As a developer, imagine you've submitted a pull request and your team leader requests you to make a change to a piece of code. The old code being referred to in the hunk of code changes is:
+```
+final class FileGitAlg[F[_]](config: GitCfg)(implicit
+  override def checkIgnore(repo: File, file: String): F[Boolean] =
+    git_(""check-ignore"", file)(repo)
+      .as(true)
+      .recover { case _: ProcessFailedException => false }
+
+  override def clone(repo: File, url: Uri): F[Unit] =
+    for {
+```
+There is the code review for this code:
+I suggest to only recover here if the process [exits with 1](https://git-scm.com/docs/git-check-ignore#_exit_status):
+```scala
+.recover { case ex: ProcessFailedException if ex.exitValue === 1 => false }
+```
+This would require to make `exitValue` a field of `ProcessFailedException`. It is currently only a constructor parameter.
+Please generate the revised code according to the review. Please ensure that the revised code follows the original code format and comments, unless it is explicitly required by the review.              
+In your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
