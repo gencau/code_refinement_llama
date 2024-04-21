@@ -258,6 +258,7 @@ def rq1():
      Here, I have only written the logic code.
      During actual execution, multiprocessing will be used to accelerate the process.
      """
+     #read_path = "sampled_codereview_250.jsonl"
      read_path = "sampled_trainval_500.jsonl"
      
      # TODO: extract your own piece of data instead
