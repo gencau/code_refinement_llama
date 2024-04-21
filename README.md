@@ -34,6 +34,11 @@ Run the best model with the best prompt and temperature settings on the followin
 Repeat the experiment 2 times
 Assess variability (should not be any, if consistent with previous results at temperature 0)
 
+#### RQ3:
+Using the categorization done in the replication paper, evaluate our model’s performance based on those categories. We have 200 instances run in RQ2 from codereview-new to process. 
+
+The categorization is done in file RQ3_RQ4_score.jsonl in the replication package.
+
 ### Content of the replication package
 - Diagrams: diagrams that were used in the paper
 - Results: the generated results for RQ1 and RQ2
@@ -46,8 +51,3 @@ Assess variability (should not be any, if consistent with previous results at te
 - *rq1_rq2_llama_windows.py*: same as above, but with some adaptations required for Windows platform.
 
 The last two scripts are where most of the work is done. Select the best one based on your platform.
-
-#### RQ3:
-Using the categorization done in the replication paper, evaluate our model’s performance based on those categories. We have 200 instances run in RQ2 from codereview-new to process. 
-
-The categorization is done in file RQ3_RQ4_score.jsonl in the replication package.
