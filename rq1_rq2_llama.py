@@ -1,16 +1,18 @@
+## This file is adapted from the replication package available at:
+## https://sites.google.com/view/chatgptcodereview/overview?authuser=0
+
 import json
 import random
 import re
 import os
 import csv
 import subprocess
-import requests
 import time
 from time import sleep
 import pandas as pd
 from evaluation import myeval
 
-
+## Generate a new prompt based on prompt 1
 def generate_new_prompt1(old_without_minus, review):
     '''
      the simplest prompt
@@ -23,6 +25,8 @@ def generate_new_prompt1(old_without_minus, review):
     prompt += "\nPlease generate the revised code according to the review.\
                \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
     return prompt
+
+## Generate a new prompt based on prompt 2
 def generate_new_prompt2(old_without_minus, review):
     '''
     P1 + Scenario Description.
@@ -37,6 +41,8 @@ def generate_new_prompt2(old_without_minus, review):
     prompt += "\nPlease generate the revised code according to the review. \
                  \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
     return prompt
+
+## Generate a new prompt based on prompt 3
 def generate_new_prompt3(old_without_minus, review):
     '''
     P1 + Detailed Requirements.
@@ -56,6 +62,8 @@ def generate_new_prompt3(old_without_minus, review):
     prompt += "\nPlease generate the revised code. \
                \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
     return prompt
+
+## Generate a new prompt based on prompt 4
 def generate_new_prompt4(old_without_minus, review):
     '''
     P1 + Concise Requirements.
@@ -70,6 +78,8 @@ def generate_new_prompt4(old_without_minus, review):
               " and comments, unless it is explicitly required by the review. \
               \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
     return prompt
+
+## Generate a new prompt based on prompt 5
 def generate_new_prompt5(old_without_minus, review):
     '''
     P4 + Scenario Description.
@@ -107,7 +117,6 @@ def get_model_response(prompt, modelfile):
             print(answer)
     
     return newcode, answer.stdout
-
 
 def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
     new_id = 0
@@ -179,7 +188,9 @@ def rq1_work(prompt_id, version_id, modelfile, temperature, datas):
         time.sleep(2)
         
         new_id += 1  # Increment ID for the next entry
-        
+
+# Extract a series of records. Very useful after the program
+# hung.
 def extract_records(read_path, start_line=0, num_records=100):
     datas = []
     with open(read_path, 'r', encoding='utf-8') as f:
@@ -198,6 +209,8 @@ def extract_records(read_path, start_line=0, num_records=100):
 
     return datas
 
+# Extract a list of IDs. Very useful after the program
+# hung.
 def fetch_records_from_jsonl(jsonl_path, record_ids):
     """
     Fetch records from a .jsonl file based on a list of record_ids.
@@ -377,7 +390,9 @@ def rq2():
         
         new_id += 1  # Increment ID for the next entry
 
+# Perform splitting of the datasets
 def split_and_save():
+    #read_path = "codereview-new.jsonl"
     read_path = "codereview.jsonl"
     train_sample_path = "sampled_codereview_train.jsonl"
     validation_sample_path = "sampled_codereview_validation.jsonl"
@@ -418,7 +433,8 @@ def split_and_save():
     print(f"Train sample saved to {train_sample_path}")
     print(f"Validation sample saved to {validation_sample_path}")
     print(f"Test sample saved to {test_sample_path}")
-    
+
+# Extract random samples from jsonl
 def sample_test():
     read_path = "sampled_codereview_test.jsonl"
     first_sample_path = "sampled_codereview_250.jsonl"
@@ -427,9 +443,8 @@ def sample_test():
     with open(read_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
     
-    # Randomly select 500 unique indices from the total lines available
     random.seed(2023)
-    # Randomly select 500 unique indices for the first sample
+    # Randomly select 250 unique indices for the first sample
     first_ids = random.sample(range(len(lines)), 250)
     
     # Write the first sample to a file
@@ -439,6 +454,7 @@ def sample_test():
      
     print(f"First sample of 250 saved to {first_sample_path}")
 
+# Sample training and validation sets combined
 def sample_train_val():
     train_sample_path = "sampled_codereview_train.jsonl"
     validation_sample_path = "sampled_codereview_validation.jsonl"

@@ -1,3 +1,9 @@
+## This file is adapted from the replication package available at:
+## https://sites.google.com/view/chatgptcodereview/overview?authuser=0
+
+# Specific processing was required for Windows-format output from subprocess.
+# The rest is very similar to rq1_rq1_llama.py
+
 import json
 import random
 import re
