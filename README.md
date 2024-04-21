@@ -54,5 +54,5 @@ The last two scripts are where most of the work is done. Select the best one bas
 
 *About the models*: They were downloaded through Ollama with the commands "ollama run llama2" and ollama run "codellama". By default, the 7B, instruct versions were downloaded.  These are 4-bit quantized versions from HuggingFace.
 See model information here:
-- Llama 2: https://huggingface.co/meta-llama/Llama-2-7b-chat-hf
-- CodeLlama: https://huggingface.co/meta-llama/CodeLlama-7b-Instruct-hf
+- Llama 2: https://ollama.com/library/llama2
+- CodeLlama: https://ollama.com/library/codellama
