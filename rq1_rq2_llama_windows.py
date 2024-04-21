@@ -397,12 +397,14 @@ def rq2():
 
 def fillMissingRecords():
 
-    read_path = "sampled_codereview-new_test.jsonl"
+    #read_path = "sampled_codereview-new_test.jsonl"
+    read_path = "sampled_codereview_test.jsonl"
     with open(read_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         
     new_id = 0
-    missing_ids = [12722,12470,2208,13942,12203,12433,12830]
+    #missing_ids = [12722,12470,2208,13942,12203,12433,12830]
+    missing_ids = [10026, 4302, 3504, 7659, 307, 12993]
 
     for line in lines:
         data = json.loads(line)
@@ -463,7 +465,7 @@ def fillMissingRecords():
         new_id += 1  # Increment ID for the next entry
 
 def calculateScoresOnManualRun():
-    read_path = "manual_run_rq2.csv"
+    read_path = "output_rq2.csv"
     output_path = "updated_manual_run_rq2.csv"  # Output file path
     
     # Initialize a list to hold updated rows
