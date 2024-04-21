@@ -51,3 +51,7 @@ The categorization is done in file RQ3_RQ4_score.jsonl in the replication packag
 - *rq1_rq2_llama_windows.py*: same as above, but with some adaptations required for Windows platform.
 
 The last two scripts are where most of the work is done. Select the best one based on your platform.
+
+*About the models*: They were downloaded through Ollama with the commands "ollama run llama2" and ollama run "codellama". By default, the 7B, instruct versions were downloaded.  These are 4-bit quantized versions from HuggingFace, available here:
+- Llama 2: https://huggingface.co/meta-llama/Llama-2-7b-chat-hf
+- CodeLlama: https://huggingface.co/meta-llama/CodeLlama-7b-Instruct-hf
