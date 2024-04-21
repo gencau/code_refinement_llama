@@ -34,6 +34,19 @@ Run the best model with the best prompt and temperature settings on the followin
 Repeat the experiment 2 times
 Assess variability (should not be any, if consistent with previous results at temperature 0)
 
+### Content of the replication package
+- Diagrams: diagrams that were used in the paper
+- Results: the generated results for RQ1 and RQ2
+- datasets: the original jsonl files from the replicated paper and the splitted versions, as well as sampling done for RQ1 and RQ2, plus the categorizations done for RQ3 from the replicated paper.
+- evaluator: scoring scripts using BLEU and Exact Match metrics.
+- model_versions: model cards for Llama 2 and CodeLlama
+- modelfiles: the Modelfiles used to create versions of the models with each temperature
+- evaluation.py: script that takes the results and runs BLEU and EM evaluators
+- *rq1_rq2_llama.py*: largely inspired from the original replication package, this script contains the methods used to run RQ1 and RQ2 on Linux/Mac platforms.
+- *rq1_rq2_llama_windows.py*: same as above, but with some adaptations required for Windows platform.
+
+The last two scripts are where most of the work is done. Select the best one based on your platform.
+
 #### RQ3:
 Using the categorization done in the replication paper, evaluate our model’s performance based on those categories. We have 200 instances run in RQ2 from codereview-new to process. 
 
