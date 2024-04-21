@@ -14,8 +14,7 @@ Added: “In your response, put the revised code between triple backticks and av
 
 Put the prompt between [INST] and [/INST] tags as recommended by model documentation (reference DeepLearning.AI training on Llama2 prompt engineering: [Prompt Engineering with Llama 2 - DeepLearning.AI](https://www.deeplearning.ai/short-courses/prompt-engineering-with-llama-2/)).
 
-1)
-Create 3 models for Llama 2 and 3 models for Code Llama using a temperature for each: 0.0, 0.5, 1.0. The models can be created using Ollama via a Modelfile (see example in the Google Drive)
+1) Create 3 models for Llama 2 and 3 models for Code Llama using a temperature for each: 0.0, 0.5, 1.0. The models can be created using Ollama via a Modelfile (see example in the Google Drive)
 Randomly select 125 data points from the CodeReview test dataset.
 Run each model on the data points, with the 5 different prompts. Use the scripts in the replication package (modify if required) as they also automatically record the scores (bleu, EM, etc.).
 Each setting is repeated 5 times to account for the randomness of predictions. The average of the 5 runs is used as the final result.
