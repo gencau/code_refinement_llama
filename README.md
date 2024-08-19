@@ -50,6 +50,9 @@ The categorization is done in file RQ3_RQ4_score.jsonl in the replication packag
 - *rq1_rq2_llama.py*: largely inspired from the original replication package, this script contains the methods used to run RQ1 and RQ2 on Linux/Mac platforms.
 - *rq1_rq2_llama_windows.py*: same as above, but with some adaptations required for Windows platform.
 
+#### Tested with python 3.8.0.
+#### Run pip install -r requirements.txt
+
 The last two scripts are where most of the work is done. Select the best one based on your platform.
 
 *About the models*: They were downloaded through Ollama with the commands "ollama run llama2" and "ollama run codellama". By default, the 7B, instruct versions were downloaded in their 4-bit quantized versions.
