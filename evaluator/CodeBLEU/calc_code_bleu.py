@@ -8,17 +8,20 @@ import os
 from evaluator.CodeBLEU import bleu, weighted_ngram_match, syntax_match, dataflow_match
 
 
-def get_codebleu(refs, hyp, lang, params='0.25,0.25,0.25,0.25'):
-    if not isinstance(refs, list):
-        refs = [refs]
+def get_codebleu(pre_references, hypothesis, lang, params='0.25,0.25,0.25,0.25'):
+    # if not isinstance(refs, list):
+    #     refs = [refs]
     alpha, beta, gamma, theta = [float(x) for x in params.split(',')]
 
     # preprocess inputs
-    pre_references = [[x.strip() for x in open(file, 'r', encoding='utf-8').readlines()] for file in refs]
-    hypothesis = [x.strip() for x in open(hyp, 'r', encoding='utf-8').readlines()]
+    # pre_references = [[x.strip() for x in open(file, 'r', encoding='utf-8').readlines()] for file in refs]
+    # hypothesis = [x.strip() for x in open(hyp, 'r', encoding='utf-8').readlines()]
 
-    for i in range(len(pre_references)):
-        assert len(hypothesis) == len(pre_references[i])
+    pre_references = [[x.strip() for x in pre_references]]
+    hypothesis = [x.strip() for x in hypothesis]
+
+    # for i in range(len(pre_references)):
+    #     assert len(hypothesis) == len(pre_references[i])
 
     references = []
     for i in range(len(hypothesis)):
@@ -41,8 +44,7 @@ def get_codebleu(refs, hyp, lang, params='0.25,0.25,0.25,0.25'):
     def make_weights(reference_tokens, key_word_list):
         return {token: 1 if token in key_word_list else 0.2 for token in reference_tokens}
 
-    tokenized_refs_with_weights = [[[reference_tokens, make_weights(reference_tokens, keywords)] \
-                                    for reference_tokens in reference] for reference in tokenized_refs]
+    tokenized_refs_with_weights = [[[reference_tokens, make_weights(reference_tokens, keywords)] for reference_tokens in reference] for reference in tokenized_refs]
 
     weighted_ngram_match_score = weighted_ngram_match.corpus_bleu(tokenized_refs_with_weights, tokenized_hyps)
 
@@ -59,7 +61,7 @@ def get_codebleu(refs, hyp, lang, params='0.25,0.25,0.25,0.25'):
                       + beta * weighted_ngram_match_score \
                       + gamma * syntax_match_score \
                       + theta * dataflow_match_score
-
+                      
     return code_bleu_score
 
 

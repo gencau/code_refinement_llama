@@ -12,12 +12,19 @@ import os
 root_dir = os.path.dirname(__file__)
 dfg_function = {
     'python': DFG_python,
+    'py': DFG_python,
     'java': DFG_java,
     'ruby': DFG_ruby,
+    'ruby': DFG_ruby,
+    'rb': DFG_ruby,
     'go': DFG_go,
     'php': DFG_php,
     'javascript': DFG_javascript,
+    'js': DFG_javascript,
     'c_sharp': DFG_csharp,
+    'csharp': DFG_csharp,
+    'c':DFG_csharp,
+    'cpp':DFG_csharp
 }
 
 

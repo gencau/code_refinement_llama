@@ -1,9 +1,10 @@
 import re
 
 import pymongo
+import pandas as pd
 
 from evaluator.smooth_bleu import bleu_fromstr, my_bleu_fromstr
-
+from evaluator.CodeBLEU import calc_code_bleu
 
 def remove_comments(code):
     # 可能会删除掉#include <stdio.h> 这样的代码
@@ -158,3 +159,76 @@ def myeval(gold, pred):
     bleu = my_bleu_fromstr([pred], [gold], rmstop=False)[0]
     bleu_trim = get_bleu_trim(gold, pred, bleu)
     return em, em_trim, em_no_space, em_no_comment, bleu, bleu_trim
+
+def get_codebleu(gold, pred, lang):
+    codebleu = calc_code_bleu.get_codebleu(gold, pred, lang)
+    return codebleu
+
+def get_codebleu_trim(gold_list, pred_list, codebleu, lang):
+    processed_pred_list = []
+    processed_gold_list = []
+    
+    for gold, pred in zip(gold_list, pred_list):
+        gold_lines = gold.split("\n")
+        pred_lines = pred.split("\n")
+        line_num = len(pred_lines)
+
+        gold_words = set()
+        for line in gold_lines[:3]:
+            gold_words.update(line.split())
+
+        if len(gold_words) > 4:
+            jaccard_max = 0
+            start_max = -1
+
+            for start_line in range(max(2, line_num - len(gold_lines) + 2)):
+                jac = jaccard_similarity("\n".join(gold_lines[:3]), "\n".join(pred_lines[start_line:start_line+3]))
+                if jac > jaccard_max:
+                    jaccard_max = jac
+                    start_max = int(start_line)
+                    if jaccard_max > 0.6:
+                        break
+
+            jaccard_max = 0
+            end_max = line_num
+
+            for end_line in range(line_num, start_max + len(gold_lines) - 2, -1):
+                jac = jaccard_similarity("\n".join(gold_lines), "\n".join(pred_lines[start_max:end_line]))
+                if jac > jaccard_max:
+                    jaccard_max = jac
+                    if end_line > start_max + len(gold_lines):
+                        end_max = int(end_line)
+                    else:
+                        if jac > 0.8:
+                            end_max = int(end_line)
+
+            gold = "\n".join([line.strip() for line in gold_lines])
+            pred = "\n".join([line.strip() for line in pred_lines[start_max:end_max]])
+            bleu_trim = my_bleu_fromstr([pred], [gold], rmstop=False)[0]
+
+        else:
+            jaccard_max = 0
+            start_max = -1
+            end_max = -1
+
+            for start_line in range(line_num):
+                for end_line in range(line_num - 1, start_line, -1):
+                    jac = jaccard_similarity("\n".join(gold_lines), "\n".join(pred_lines[start_line:end_line]))
+                    if jac > jaccard_max:
+                        jaccard_max = jac
+                        start_max = int(start_line)
+                        end_max = int(end_line)
+
+            gold = "\n".join(gold_lines)
+            pred = "\n".join(pred_lines[start_max:end_max])
+        
+        # Adjustments to pass the processed `gold` and `pred` as a list to `get_codebleu`
+        processed_gold_list.append(gold)
+        processed_pred_list.append(pred)
+
+    codebleu_trim = get_codebleu(processed_gold_list, processed_pred_list, lang)
+
+    if codebleu > codebleu_trim:
+        codebleu_trim = codebleu
+
+    return codebleu_trim
