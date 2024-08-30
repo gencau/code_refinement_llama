@@ -1,6 +1,6 @@
-## Exploring the Potential of a Large Language Model Pre-Trained on Code for Automated Code Refinement - A Replication Study
+## Evaluating Open-Source Smaller Scale Large Language Models for Automated Code Review: A Comparative Study of CodeLlama and Llama 2
 
-This study is an extension of the paper by Guo et al in "Exploring the Potential of ChatGPT in Automated Code Refinement: An Empirical Study".
+Our work investigates the code refinement capabilities of two open-source models, offering practical solutions to the challenges of using LLMs in real-world software. It is an extension of the paper by Guo et al in "Exploring the Potential of ChatGPT in Automated Code Refinement: An Empirical Study".
 Their replication package and extra information is available at: https://sites.google.com/view/chatgptcodereview/overview?authuser=0
 
 ### Methodology of our study - Overview
