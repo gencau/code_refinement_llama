@@ -1,8 +1,6 @@
-# Course project for SOEN691 - Software Engineering for Generative AI
-
 ## Exploring the Potential of a Large Language Model Pre-Trained on Code for Automated Code Refinement - A Replication Study
 
-This study is a replication of the paper by Guo et al in "Exploring the Potential of ChatGPT in Automated Code Refinement: An Empirical Study".
+This study is an extension of the paper by Guo et al in "Exploring the Potential of ChatGPT in Automated Code Refinement: An Empirical Study".
 Their replication package and extra information is available at: https://sites.google.com/view/chatgptcodereview/overview?authuser=0
 
 ### Methodology of our study - Overview
