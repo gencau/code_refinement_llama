@@ -12,7 +12,7 @@ def get_output_from_df(result_path, isCsv):
 
         df = df.fillna(' ')
 
-        generated_outputs = df['new_answer'].tolist()
+        generated_outputs = df['new_code'].tolist()
     else:
         df = pd.read_json(result_path, lines=True)
         df = df.fillna(' ')
@@ -20,17 +20,38 @@ def get_output_from_df(result_path, isCsv):
 
     return generated_outputs
 
+# Process ground truth lines as done in rq1_rq2_llama.py for BLEU metric
+def process_gt_lines(column):
+    processed_ground_truth = []
+
+    # remove leading + signs and leading/trailing space for each line 
+    for item in column:
+        lines = item.split('\n')  # Split the item into lines based on the newline character
+        processed_lines = []
+
+        for line in lines:
+            print (f"Original line: {line}")
+            if line.strip() != "":  # Ensure the line is not empty
+                processed_lines.append(line[1:].strip())  # Remove the first character of the line
+                print(f"Processed line: {line[1:].strip()}")
+
+        # Join the processed lines back together with '\n' 
+        processed_item = '\n'.join(processed_lines)
+        processed_ground_truth.append(processed_item)
+
+    return processed_ground_truth
+
 def get_gt_from_file(result_path, isCsv):
     if (isCsv):
         df = pd.read_csv(result_path)
 
         df = df.fillna(' ')
 
-        ground_truth = df['new_code'].tolist()
+        ground_truth = process_gt_lines(df['new'])
     else:
         df = pd.read_json(result_path, lines=True)
         df = df.fillna(' ')
-        ground_truth = df['new']
+        ground_truth = process_gt_lines(df['new'])
 
     return ground_truth
 
@@ -113,6 +134,7 @@ print('ground truth file path:', gt_file_path)
 ground_truth = get_gt_from_file(gt_file_path, True)
 generated_outputs = get_output_from_file(gt_file_path, True)
 
+# Set the language file for the dataset CR or CRN
 #lang_list = get_languages_from_file("datasets/languages/languages_cr.csv")
 lang_list = get_languages_from_file("datasets/languages/languages_crn.csv")
 
@@ -132,10 +154,14 @@ for name, sub_df in df.groupby('lang'):
     if (lang in unsupported_list):
         continue
 
-    pred_results = get_codebleu(ground_truth, generated_outputs, lang_dict[lang])
+    sub_gt = sub_df['gt']
+    sub_output = sub_df['output']
+
+    print(f"Sending {len(sub_gt)} ground truth items and {len(sub_output)} generated outputs to codeBLEU for language {lang}")
+    pred_results = get_codebleu(sub_gt, sub_output, lang_dict[lang])
     codebleu_by_lang[lang] = pred_results
 
-    trim_results = get_codebleu_trim(ground_truth, generated_outputs, pred_results, lang_dict[lang])
+    trim_results = get_codebleu_trim(sub_gt, sub_output, pred_results, lang_dict[lang])
     codebleu_trim_by_lang[lang] = trim_results
 
 print('avg codeBLEU from all lang:', round(np.mean(list(codebleu_by_lang.values()))*100,2))
