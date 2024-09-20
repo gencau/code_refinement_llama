@@ -38,8 +38,7 @@ Using the categorization done in the replication paper, evaluate our model’s p
 The categorization is done in file RQ3_RQ4_score.jsonl in the replication package.
 
 ### Content of the replication package
-- Diagrams: diagrams that were used in the paper
-- Results: the generated results for RQ1 and RQ2
+- Results: the generated results for RQ1 and RQ2, and additional results for Llama 3.1 for the discussion part of the paper.
 - datasets: the original jsonl files from the replicated paper and the splitted versions, as well as sampling done for RQ1 and RQ2, plus the categorizations done for RQ3 from the replicated paper.
 - evaluator: scoring scripts using BLEU and Exact Match metrics.
 - model_versions: model cards for Llama 2 and CodeLlama
@@ -47,11 +46,12 @@ The categorization is done in file RQ3_RQ4_score.jsonl in the replication packag
 - evaluation.py: script that takes the results and runs BLEU and EM evaluators
 - *rq1_rq2_llama.py*: largely inspired from the original replication package, this script contains the methods used to run RQ1 and RQ2 on Linux/Mac platforms.
 - *rq1_rq2_llama_windows.py*: same as above, but with some adaptations required for Windows platform.
+- *eval_codebleu_multilang.py*: get codeBLEU and codeBLEU-T metric for all models, given the results. Based on https://github.com/awsm-research/LLM-for-code-review-automatiton/blob/main/script/evaluation/eval_CodeBLEU-multi-lang.py.
 
 #### Tested with python 3.8.0.
 #### Run pip install -r requirements.txt
 
-The last two scripts are where most of the work is done. Select the best one based on your platform.
+The scripts rq1_rq2_llama*.py are where most of the work is done. Select the best one based on your platform.
 
 *About the models*: They were downloaded through Ollama with the commands "ollama run llama2" and "ollama run codellama". By default, the 7B, instruct versions were downloaded in their 4-bit quantized versions.
 See model information here:
