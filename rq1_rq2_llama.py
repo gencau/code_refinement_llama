@@ -79,6 +79,22 @@ def generate_new_prompt4(old_without_minus, review):
               \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.[/INST]"
     return prompt
 
+## Generate a new prompt based on prompt 4
+def generate_new_prompt4_llama31(old_without_minus, review):
+    '''
+    P1 + Concise Requirements.
+    '''
+    prompt = "<|begin_of_text|><|start_header_id|>user<|end_header_id|>"
+    prompt += "code snippet:\n"
+    prompt += "```\n{}\n```\n".format(old_without_minus)
+    prompt += "code review:\n"
+    prompt += review
+    prompt += "\nPlease generate the revised code according to the review. " \
+              "Please ensure that the revised code follows the original code format" \
+              " and comments, unless it is explicitly required by the review. \
+              \nIn your response, put the revised code between triple backticks and avoid mentioning the programming language between the backticks.<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+    return prompt
+
 ## Generate a new prompt based on prompt 5
 def generate_new_prompt5(old_without_minus, review):
     '''
@@ -298,18 +314,61 @@ def rq1():
                  print(f"Pausing for {pause_duration}, seconds")
                  time.sleep(pause_duration)
 
+def calculateScoresOnManualRun():
+    read_path = "output_rq2.csv"
+    output_path = "updated_manual_run_rq2.csv"  # Output file path
+    
+    # Initialize a list to hold updated rows
+    updated_rows = []
 
+    # Read the original CSV data
+    with open(read_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        lines = list(reader)  # Convert iterator to list to reuse
+        
+        # Define fieldnames for the output CSV based on the input plus new fields
+        fieldnames = reader.fieldnames + ['new_em', 'new_em_trim', 'new_bleu', 'new_bleu_trim']
+
+        for row in lines:
+            # Assuming row is already a dictionary
+            result = row['new']
+            gpt_code = row['new_code']
+
+            # Your existing logic to calculate the scores
+            # Assuming myeval returns scores that you want to add to row
+            new_code = "\n".join([line[1:].strip() for line in result.split("\n") if line.strip() != ""])
+            gpt_em, gpt_em_trim, _, _, gpt_bleu, gpt_bleu_trim = myeval(new_code, gpt_code)
+            
+            # Update row with new scores
+            row.update({
+                'new_em': gpt_em,
+                'new_em_trim': gpt_em_trim,
+                'new_bleu': gpt_bleu,
+                'new_bleu_trim': gpt_bleu_trim,
+            })
+            updated_rows.append(row)
+
+    # Write updated data to a new CSV file
+    with open(output_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(updated_rows)
+
+    print(f"Updated scores have been written to {output_path}")
+            
+        
 def rq2():
     # The steps for codereview.jsonl and codereview_new.jsonl are essentially the same,
     # with the only difference being the method of storing data in the database.
-    # read_path = "codereview.jsonl"
-    read_path = "sampled_codereview-new_test.jsonl"
-    with open(read_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+    read_path = "datasets/RQ2/sampled_codereview_test.jsonl"
+    lines = extract_records(read_path, start_line=0, num_records=1200)
+
+    #with open(read_path, 'r', encoding='utf-8') as f:
+    #    lines = f.readlines()
 
     new_id = 0
     for line in lines:
-        data = json.loads(line)
+        data = line #json.loads(line)
         _id = data['_id']
         old = data['old']
         new = data['new']
@@ -318,10 +377,15 @@ def rq2():
         for line in old.split("\n"):
             old_without_minus.append(line[1:])
         old_without_minus = "\n".join(old_without_minus)
-        prompt = generate_new_prompt5(old_without_minus, review)
+        prompt = generate_new_prompt4_llama31(old_without_minus, review)
+
+        print(prompt)
+
         gpt_code = "no code"
         gpt_answer = "no answer"
-        modelfile = "codellama-temp0"
+        #modelfile = "llama2-0"
+        #modelfile = "codellama-temp0" 
+        modelfile = "llama31"
 
         print("Current id: " + str(data['_id']))
 
@@ -494,6 +558,7 @@ def main():
     #rq1()
     #call_rq1_work_with_file_data("missing_records_codellama_100.csv", "sampled_codereview_250.jsonl")
     rq2()
+    #calculateScoresOnManualRun()
 
 
 if __name__ == '__main__':
